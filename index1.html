@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nguyễn Quốc Hiếu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f2ed;
+    --fg: #1a1710;
+    --muted: #7a7669;
+    --border: rgba(26,23,16,0.12);
+    --border-hover: rgba(26,23,16,0.28);
+    --accent: #2a2318;
+    --serif: 'EB Garamond', Georgia, serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 52px;
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--fg);
+    text-decoration: none;
+    text-transform: lowercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: lowercase;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--fg);
+  }
+
+  /* ── PAGES ── */
+  .page {
+    display: none;
+    min-height: 100vh;
+    padding-top: 52px;
+  }
+
+  .page.active { display: block; }
+
+  /* ── HOME ── */
+  #page-home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0 2.5rem;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  #page-home.active { display: flex; }
+
+  .home-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .home-headline {
+    font-size: clamp(2.6rem, 6vw, 4.8rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    margin-bottom: 1.8rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .home-headline em {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .home-bio {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.75;
+    margin-bottom: 2.8rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .home-links {
+    display: flex;
+    gap: 1.5rem;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .home-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--fg);
+    text-decoration: none;
+    text-transform: lowercase;
+    border-bottom: 0.5px solid var(--border-hover);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .home-links a:hover { border-color: var(--fg); }
+
+  .home-scroll-hint {
+    position: fixed;
+    bottom: 2rem;
+    left: 2.5rem;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--border-hover);
+    text-transform: uppercase;
+    animation: fadeUp 0.6s 0.6s ease both;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* ── PORTFOLIO ── */
+  #page-portfolio {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem 6rem;
+  }
+
+  .page-header {
+    margin-bottom: 3.5rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .page-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--fg);
+  }
+
+  .film-section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin: 2.5rem 0 0.8rem;
+    opacity: 0.7;
+  }
+
+  .film-list { list-style: none; }
+
+  .film-item {
+    border-top: 0.5px solid var(--border);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .film-item:last-child { border-bottom: 0.5px solid var(--border); }
+
+  .film-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    cursor: pointer;
+    gap: 1rem;
+  }
+
+  .film-header:hover .film-title { opacity: 0.55; }
+
+  .film-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--fg);
+    transition: opacity 0.2s;
+  }
+
+  .film-meta-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .film-year {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .film-toggle {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .film-toggle svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--muted);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .film-toggle.open { transform: rotate(180deg); }
+
+  .film-details {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+  }
+
+  .film-details.open {
+    max-height: 600px;
+    opacity: 1;
+  }
+
+  .film-details-inner {
+    padding: 0.2rem 0 1.6rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem 2rem;
+  }
+
+  .detail-block {}
+
+  .detail-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .detail-value {
+    font-size: 15px;
+    color: var(--fg);
+  }
+
+  .crew-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .crew-list li {
+    font-size: 14px;
+    color: var(--fg);
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .crew-role {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 90px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+
+  .crew-name {
+    color: var(--fg);
+  }
+
+  .film-synopsis {
+    grid-column: 1 / -1;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.7;
+    border-left: 1.5px solid var(--border-hover);
+    padding-left: 1rem;
+  }
+
+  /* ── CONTACT ── */
+  #page-contact {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem 6rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+
+  .contact-block {}
+
+  .contact-block-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .contact-block a,
+  .contact-block p {
+    font-size: 1rem;
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 0.5px solid transparent;
+    transition: border-color 0.2s;
+    display: inline-block;
+  }
+
+  .contact-block a:hover { border-color: var(--border-hover); }
+
+  .contact-form {
+    margin-top: 3rem;
+    animation: fadeUp 0.5s 0.2s ease both;
+  }
+
+  .contact-form-title {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .form-row {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-row label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-row input,
+  .form-row textarea {
+    width: 100%;
+    background: transparent;
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+    padding: 0.6rem 0.8rem;
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--fg);
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+
+  .form-row input:focus,
+  .form-row textarea:focus { border-color: var(--border-hover); }
+
+  .form-row textarea { min-height: 120px; }
+
+  .form-submit {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+    color: var(--fg);
+    background: transparent;
+    border: 0.5px solid var(--border-hover);
+    padding: 0.6rem 1.6rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border-radius: 2px;
+  }
+
+  .form-submit:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  /* ── BLOG ── */
+  #page-blog {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem 6rem;
+  }
+
+  .blog-list { list-style: none; margin-top: 2rem; }
+
+  .blog-post {
+    border-top: 0.5px solid var(--border);
+    padding: 1.5rem 0;
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 0 2rem;
+    cursor: pointer;
+    animation: fadeUp 0.5s ease both;
+    transition: opacity 0.2s;
+  }
+
+  .blog-post:last-child { border-bottom: 0.5px solid var(--border); }
+  .blog-post:hover { opacity: 0.6; }
+
+  .blog-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    padding-top: 3px;
+    line-height: 1.4;
+  }
+
+  .blog-post-title {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--fg);
+    margin-bottom: 0.3rem;
+  }
+
+  .blog-post-excerpt {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .blog-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 0.5px solid var(--border);
+    padding: 1px 7px;
+    border-radius: 20px;
+    margin-top: 0.5rem;
+  }
+
+  /* ── BLOG DETAIL VIEW ── */
+  #blog-detail {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem 6rem;
+    display: none;
+  }
+
+  #blog-detail.active { display: block; }
+
+  .blog-back {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+
+  .blog-back:hover { color: var(--fg); }
+
+  .blog-detail-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .blog-detail-title {
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--fg);
+    line-height: 1.15;
+    margin-bottom: 2rem;
+  }
+
+  .blog-detail-body {
+    font-size: 1.05rem;
+    color: var(--fg);
+    line-height: 1.8;
+  }
+
+  .blog-detail-body p { margin-bottom: 1.2rem; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { gap: 1.2rem; }
+    #page-home, #page-portfolio, #page-contact, #page-blog, #blog-detail {
+      padding-left: 1.2rem;
+      padding-right: 1.2rem;
+    }
+    #page-home { padding-top: 52px; justify-content: flex-start; padding-top: 6rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .film-details-inner { grid-template-columns: 1fr; }
+    .blog-post { grid-template-columns: 1fr; gap: 0.3rem; }
+    .home-scroll-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">Nguyễn Quốc Hiếu</a>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" data-page="home">home</a></li>
+    <li><a onclick="showPage('portfolio')" data-page="portfolio">portfolio</a></li>
+    <li><a onclick="showPage('contact')" data-page="contact">contact</a></li>
+    <li><a onclick="showPage('blog')" data-page="blog">blog</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HOME ══ -->
+<section id="page-home" class="page active">
+  <span class="home-eyebrow">filmmaker · editor · director of photography</span>
+  <h1 class="home-headline">
+    telling stories<br>
+    <em>through film.</em>
+  </h1>
+  <p class="home-bio">
+    Based in Hanoi. I make short films, documentaries, and motion graphics.
+    This is a placeholder — replace this with a few sentences about who you are,
+    what drives your work, and the kind of stories you want to tell.
+  </p>
+  <div class="home-links">
+    <a onclick="showPage('portfolio')">see work →</a>
+    <a onclick="showPage('contact')">get in touch →</a>
+  </div>
+  <span class="home-scroll-hint">portfolio</span>
+</section>
+
+<!-- ══ PORTFOLIO ══ -->
+<section id="page-portfolio" class="page">
+  <div class="page-header">
+    <span class="page-label">selected work</span>
+    <h2 class="page-title">Portfolio</h2>
+  </div>
+
+  <p class="film-section-label">short films</p>
+  <ul class="film-list">
+
+    <li class="film-item">
+      <div class="film-header" onclick="toggleFilm(this)">
+        <span class="film-title">film title one</span>
+        <span class="film-meta-right">
+          <span class="film-year">20XX</span>
+          <span class="film-toggle">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </span>
+      </div>
+      <div class="film-details">
+        <div class="film-details-inner">
+          <div class="detail-block">
+            <span class="detail-label">production date</span>
+            <span class="detail-value">Month–Month, Year</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">format</span>
+            <span class="detail-value">digital / 16mm / etc.</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">duration</span>
+            <span class="detail-value">XX min</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">status</span>
+            <span class="detail-value">completed / in post / etc.</span>
+          </div>
+          <div class="detail-block" style="grid-column: 1 / -1;">
+            <span class="detail-label">crew</span>
+            <ul class="crew-list">
+              <li><span class="crew-role">director</span><span class="crew-name">Your Name</span></li>
+              <li><span class="crew-role">producer</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role">d.o.p.</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role">sound</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role">editor</span><span class="crew-name">Name Here</span></li>
+            </ul>
+          </div>
+          <p class="film-synopsis">
+            Write a short synopsis here — one or two sentences describing what the film is about.
+            Replace this placeholder with your own words.
+          </p>
+        </div>
+      </div>
+    </li>
+
+    <li class="film-item">
+      <div class="film-header" onclick="toggleFilm(this)">
+        <span class="film-title">film title two</span>
+        <span class="film-meta-right">
+          <span class="film-year">20XX</span>
+          <span class="film-toggle">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </span>
+      </div>
+      <div class="film-details">
+        <div class="film-details-inner">
+          <div class="detail-block">
+            <span class="detail-label">production date</span>
+            <span class="detail-value">Month–Month, Year</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">format</span>
+            <span class="detail-value">digital / 16mm / etc.</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">duration</span>
+            <span class="detail-value">XX min</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">status</span>
+            <span class="detail-value">completed / in post / etc.</span>
+          </div>
+          <div class="detail-block" style="grid-column: 1 / -1;">
+            <span class="detail-label">crew</span>
+            <ul class="crew-list">
+              <li><span class="crew-role">director</span><span class="crew-name">Your Name</span></li>
+              <li><span class="crew-role">producer</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role">d.o.p.</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role">sound</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role">editor</span><span class="crew-name">Name Here</span></li>
+            </ul>
+          </div>
+          <p class="film-synopsis">
+            Write a short synopsis here — one or two sentences describing what the film is about.
+            Replace this placeholder with your own words.
+          </p>
+        </div>
+      </div>
+    </li>
+
+    <li class="film-item">
+      <div class="film-header" onclick="toggleFilm(this)">
+        <span class="film-title">film title three</span>
+        <span class="film-meta-right">
+          <span class="film-year">20XX</span>
+          <span class="film-toggle">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </span>
+      </div>
+      <div class="film-details">
+        <div class="film-details-inner">
+          <div class="detail-block">
+            <span class="detail-label">production date</span>
+            <span class="detail-value">Month–Month, Year</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">format</span>
+            <span class="detail-value">digital / 16mm / etc.</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">duration</span>
+            <span class="detail-value">XX min</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">status</span>
+            <span class="detail-value">completed / in post / etc.</span>
+          </div>
+          <div class="detail-block" style="grid-column: 1 / -1;">
+            <span class="detail-label">crew</span>
+            <ul class="crew-list">
+              <li><span class="crew-role">director</span><span class="crew-name">Your Name</span></li>
+              <li><span class="crew-role">producer</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role">d.o.p.</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role">sound</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role">editor</span><span class="crew-name">Name Here</span></li>
+            </ul>
+          </div>
+          <p class="film-synopsis">
+            Write a short synopsis here — one or two sentences describing what the film is about.
+            Replace this placeholder with your own words.
+          </p>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+
+  <p class="film-section-label" style="margin-top: 3rem;">motion graphics</p>
+  <ul class="film-list">
+    <li class="film-item">
+      <div class="film-header" onclick="toggleFilm(this)">
+        <span class="film-title">motion project one</span>
+        <span class="film-meta-right">
+          <span class="film-year">20XX</span>
+          <span class="film-toggle">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </span>
+      </div>
+      <div class="film-details">
+        <div class="film-details-inner">
+          <div class="detail-block">
+            <span class="detail-label">client</span>
+            <span class="detail-value">Client Name</span>
+          </div>
+          <div class="detail-block">
+            <span class="detail-label">year</span>
+            <span class="detail-value">20XX</span>
+          </div>
+          <div class="detail-block" style="grid-column: 1 / -1;">
+            <span class="detail-label">crew</span>
+            <ul class="crew-list">
+              <li><span class="crew-role">director</span><span class="crew-name">Your Name</span></li>
+              <li><span class="crew-role">animator</span><span class="crew-name">Name Here</span></li>
+            </ul>
+          </div>
+          <p class="film-synopsis">
+            Brief description of the project — what it was for, what you made.
+          </p>
+        </div>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="page-contact" class="page">
+  <div style="max-width: 620px; margin: 0 auto; padding: 4rem 2.5rem 6rem;">
+    <div class="page-header">
+      <span class="page-label">reach out</span>
+      <h2 class="page-title">Contact</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-block">
+        <span class="contact-block-label">email</span>
+        <a href="mailto:quochieu9955@gmail.com">quochieu9955@mail.com</a>
+      </div>
+      <div class="contact-block">
+        <span class="contact-block-label">location</span>
+        <p>Hanoi, Vietnam</p>
+      </div>
+      <div class="contact-block">
+        <span class="contact-block-label">instagram</span>
+        <a href="https://instagram.com/hieukhongaiyeu" target="_blank">@hieukhongaiyeu</a>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <p class="contact-form-title">or send a message directly —</p>
+      <div class="form-row">
+        <label for="f-name">name</label>
+        <input type="text" id="f-name" placeholder="your name">
+      </div>
+      <div class="form-row">
+        <label for="f-email">email</label>
+        <input type="email" id="f-email" placeholder="your@email.com">
+      </div>
+      <div class="form-row">
+        <label for="f-msg">message</label>
+        <textarea id="f-msg" placeholder="what's on your mind?"></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit()">send message →</button>
+      <p id="form-confirm" style="display:none; font-family: var(--mono); font-size:11px; color: var(--muted); margin-top:0.8rem; letter-spacing:0.1em;">
+        message sent — thank you.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BLOG ══ -->
+<section id="page-blog" class="page">
+  <div style="max-width: 720px; margin: 0 auto; padding: 4rem 2.5rem 6rem;">
+    <div class="page-header">
+      <span class="page-label">writing</span>
+      <h2 class="page-title">Blog</h2>
+    </div>
+
+    <ul class="blog-list" id="blog-list">
+
+      <li class="blog-post" onclick="openPost(0)">
+        <span class="blog-date">Jan<br>20XX</span>
+        <div>
+          <p class="blog-post-title">on making your first short film</p>
+          <p class="blog-post-excerpt">Some thoughts on the gap between the film in your head and the one you actually make — and why that gap is necessary.</p>
+          <span class="blog-tag">process</span>
+        </div>
+      </li>
+
+      <li class="blog-post" onclick="openPost(1)">
+        <span class="blog-date">Feb<br>20XX</span>
+        <div>
+          <p class="blog-post-title">cameras i've used and what i've learned</p>
+          <p class="blog-post-excerpt">A casual rundown of every camera that's passed through my hands, and how each one changed the way I see a frame.</p>
+          <span class="blog-tag">gear</span>
+        </div>
+      </li>
+
+      <li class="blog-post" onclick="openPost(2)">
+        <span class="blog-date">Mar<br>20XX</span>
+        <div>
+          <p class="blog-post-title">why i love long takes</p>
+          <p class="blog-post-excerpt">An unscientific argument for staying in the moment longer — and the directors who taught me why.</p>
+          <span class="blog-tag">craft</span>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+
+  <!-- Blog detail (inside blog page so nav stays correct) -->
+  <div id="blog-detail">
+    <div style="max-width: 620px; margin: 0 auto; padding: 0 2.5rem;">
+      <button class="blog-back" onclick="closeBlogPost()">← back to blog</button>
+      <p class="blog-detail-label" id="detail-date"></p>
+      <h2 class="blog-detail-title" id="detail-title"></h2>
+      <div class="blog-detail-body" id="detail-body"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* ── page navigation ── */
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelector('[data-page="' + id + '"]').classList.add('active');
+    window.scrollTo(0, 0);
+    closeBlogPost(true);
+  }
+
+  /* ── film accordion ── */
+  function toggleFilm(header) {
+    const details = header.nextElementSibling;
+    const toggle = header.querySelector('.film-toggle');
+    const isOpen = details.classList.contains('open');
+    document.querySelectorAll('.film-details.open').forEach(d => {
+      d.classList.remove('open');
+      d.previousElementSibling.querySelector('.film-toggle').classList.remove('open');
+    });
+    if (!isOpen) {
+      details.classList.add('open');
+      toggle.classList.add('open');
+    }
+  }
+
+  /* ── blog posts data ── */
+  const posts = [
+    {
+      date: 'January 20XX',
+      title: 'on making your first short film',
+      tag: 'process',
+      body: `<p>This is where your blog post goes. Write whatever you want here — thoughts on filmmaking, your process, what you learned on a shoot, a review of something you watched.</p>
+<p>You can have multiple paragraphs. Just copy the <code>&lt;p&gt;...&lt;/p&gt;</code> pattern for each one.</p>
+<p>Replace this placeholder text with your actual writing when you're ready.</p>`
+    },
+    {
+      date: 'February 20XX',
+      title: 'cameras i\'ve used and what i\'ve learned',
+      tag: 'gear',
+      body: `<p>This is where your second blog post goes. Write about any camera — your phone, a borrowed DSLR, anything.</p>
+<p>Replace this placeholder text with your actual writing when you're ready.</p>`
+    },
+    {
+      date: 'March 20XX',
+      title: 'why i love long takes',
+      tag: 'craft',
+      body: `<p>This is where your third blog post goes.</p>
+<p>Replace this placeholder text with your actual writing when you're ready.</p>`
+    }
+  ];
+
+  function openPost(i) {
+    const p = posts[i];
+    document.getElementById('detail-date').textContent = p.date + ' · ' + p.tag;
+    document.getElementById('detail-title').textContent = p.title;
+    document.getElementById('detail-body').innerHTML = p.body;
+    document.getElementById('blog-list').parentElement.style.display = 'none';
+    document.getElementById('blog-detail').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function closeBlogPost(silent) {
+    const list = document.getElementById('blog-list');
+    if (list) list.parentElement.style.display = '';
+    const detail = document.getElementById('blog-detail');
+    if (detail) detail.classList.remove('active');
+  }
+
+  /* ── contact form ── */
+  function handleSubmit() {
+    const name = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const msg = document.getElementById('f-msg').value.trim();
+    if (!name || !email || !msg) return;
+    document.getElementById('form-confirm').style.display = 'block';
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-email').value = '';
+    document.getElementById('f-msg').value = '';
+  }
+</script>
+</body>
+</html>
