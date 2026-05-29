@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nguyễn Quốc Hiếu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,8 +17,8 @@
     --border: rgba(26,23,16,0.12);
     --border-hover: rgba(26,23,16,0.28);
     --accent: #2a2318;
-    --serif: 'EB Garamond', Georgia, serif;
-    --mono: 'DM Mono', 'Courier New', monospace;
+    --serif: 'Lora', Georgia, serif;
+    --mono: 'IBM Plex Mono', 'Courier New', monospace;
   }
 
   html { scroll-behavior: smooth; }
@@ -75,9 +75,7 @@
   }
 
   .nav-links a:hover,
-  .nav-links a.active {
-    color: var(--fg);
-  }
+  .nav-links a.active { color: var(--fg); }
 
   /* ── PAGES ── */
   .page {
@@ -156,20 +154,6 @@
 
   .home-links a:hover { border-color: var(--fg); }
 
-  .home-scroll-hint {
-    position: fixed;
-    bottom: 2rem;
-    left: 2.5rem;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: var(--border-hover);
-    text-transform: uppercase;
-    animation: fadeUp 0.6s 0.6s ease both;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-  }
-
   /* ── PORTFOLIO ── */
   #page-portfolio {
     max-width: 720px;
@@ -178,19 +162,8 @@
   }
 
   .page-header {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
     animation: fadeUp 0.5s ease both;
-  }
-
-  .page-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 0.14em;
-    color: var(--muted);
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 0.5rem;
   }
 
   .page-title {
@@ -199,66 +172,48 @@
     color: var(--fg);
   }
 
-  .film-section-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin: 2.5rem 0 0.8rem;
-    opacity: 0.7;
-  }
-
-  .film-list { list-style: none; }
-
-  .film-item {
+  /* Portfolio collapsible sections */
+  .portfolio-section {
     border-top: 0.5px solid var(--border);
-    animation: fadeUp 0.5s ease both;
   }
 
-  .film-item:last-child { border-bottom: 0.5px solid var(--border); }
+  .portfolio-section:last-child {
+    border-bottom: 0.5px solid var(--border);
+  }
 
-  .film-header {
+  .portfolio-section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
     cursor: pointer;
-    gap: 1rem;
+    user-select: none;
   }
 
-  .film-header:hover .film-title { opacity: 0.55; }
-
-  .film-title {
-    font-size: 1.2rem;
-    font-weight: 400;
+  .portfolio-section-header:hover .section-label-text {
     color: var(--fg);
-    transition: opacity 0.2s;
   }
 
-  .film-meta-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-shrink: 0;
-  }
-
-  .film-year {
+  .section-label-text {
     font-family: var(--mono);
     font-size: 11px;
+    letter-spacing: 0.16em;
     color: var(--muted);
+    text-transform: uppercase;
+    transition: color 0.2s;
   }
 
-  .film-toggle {
+  .section-toggle {
     width: 18px;
     height: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    flex-shrink: 0;
   }
 
-  .film-toggle svg {
+  .section-toggle svg {
     width: 12px;
     height: 12px;
     stroke: var(--muted);
@@ -268,28 +223,67 @@
     stroke-linejoin: round;
   }
 
-  .film-toggle.open { transform: rotate(180deg); }
+  .section-toggle.open { transform: rotate(180deg); }
 
-  .film-details {
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+  .portfolio-section-content {
+    display: none;
+    padding-bottom: 1.5rem;
+    animation: fadeUp 0.3s ease both;
   }
 
-  .film-details.open {
-    max-height: 600px;
-    opacity: 1;
+  .portfolio-section-content.open { display: block; }
+
+  /* Project grid — 3 columns */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 0.5px solid var(--border);
+    border-bottom: none;
   }
+
+  .project-card {
+    padding: 1.2rem 1rem;
+    border-right: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .project-card:nth-child(3n) { border-right: none; }
+
+  .project-card:hover { background: rgba(26,23,16,0.04); }
+
+  .project-card.active { background: rgba(26,23,16,0.07); }
+
+  .project-card-title {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--fg);
+    line-height: 1.35;
+    margin-bottom: 0.35rem;
+  }
+
+  .project-card-year {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Detail panel — spans full width below grid */
+  .project-detail-panel {
+    display: none;
+    border: 0.5px solid var(--border);
+    border-top: none;
+  }
+
+  .project-detail-panel.open { display: block; }
 
   .film-details-inner {
-    padding: 0.2rem 0 1.6rem;
+    padding: 1.5rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.4rem 2rem;
   }
-
-  .detail-block {}
 
   .detail-label {
     font-family: var(--mono);
@@ -329,9 +323,7 @@
     padding-top: 1px;
   }
 
-  .crew-name {
-    color: var(--fg);
-  }
+  .crew-name { color: var(--fg); }
 
   .film-synopsis {
     grid-column: 1 / -1;
@@ -357,8 +349,6 @@
     margin-top: 2.5rem;
     animation: fadeUp 0.5s 0.1s ease both;
   }
-
-  .contact-block {}
 
   .contact-block-label {
     font-family: var(--mono);
@@ -394,9 +384,7 @@
     font-style: italic;
   }
 
-  .form-row {
-    margin-bottom: 1.2rem;
-  }
+  .form-row { margin-bottom: 1.2rem; }
 
   .form-row label {
     font-family: var(--mono);
@@ -572,11 +560,13 @@
       padding-left: 1.2rem;
       padding-right: 1.2rem;
     }
-    #page-home { padding-top: 52px; justify-content: flex-start; padding-top: 6rem; }
+    #page-home { justify-content: flex-start; padding-top: 6rem; }
     .contact-grid { grid-template-columns: 1fr; }
     .film-details-inner { grid-template-columns: 1fr; }
     .blog-post { grid-template-columns: 1fr; gap: 0.3rem; }
-    .home-scroll-hint { display: none; }
+    .project-grid { grid-template-columns: 1fr 1fr; }
+    .project-card:nth-child(3n) { border-right: 0.5px solid var(--border); }
+    .project-card:nth-child(2n) { border-right: none; }
   }
 </style>
 </head>
@@ -587,8 +577,8 @@
   <ul class="nav-links">
     <li><a onclick="showPage('home')" data-page="home">home</a></li>
     <li><a onclick="showPage('portfolio')" data-page="portfolio">portfolio</a></li>
-    <li><a onclick="showPage('contact')" data-page="contact">contact</a></li>
     <li><a onclick="showPage('blog')" data-page="blog">blog</a></li>
+    <li><a onclick="showPage('contact')" data-page="contact">contact</a></li>
   </ul>
 </nav>
 
@@ -604,7 +594,6 @@
     <a onclick="showPage('portfolio')">see work →</a>
     <a onclick="showPage('contact')">get in touch →</a>
   </div>
-  <span class="home-scroll-hint">portfolio</span>
 </section>
 
 <!-- ══ PORTFOLIO ══ -->
@@ -613,20 +602,31 @@
     <h2 class="page-title">Portfolio</h2>
   </div>
 
-  <p class="film-section-label">short films</p>
-  <ul class="film-list">
-
-    <li class="film-item">
-      <div class="film-header" onclick="toggleFilm(this)">
-        <span class="film-title">film title one</span>
-        <span class="film-meta-right">
-          <span class="film-year">20XX</span>
-          <span class="film-toggle">
-            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </span>
-        </span>
+  <!-- Short Films -->
+  <div class="portfolio-section">
+    <div class="portfolio-section-header" onclick="toggleSection(this)">
+      <span class="section-label-text">short films</span>
+      <span class="section-toggle">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="portfolio-section-content">
+      <div class="project-grid">
+        <div class="project-card" data-panel="panel-film-0" onclick="showDetail(this)">
+          <p class="project-card-title">film title one</p>
+          <span class="project-card-year">20XX</span>
+        </div>
+        <div class="project-card" data-panel="panel-film-1" onclick="showDetail(this)">
+          <p class="project-card-title">film title two</p>
+          <span class="project-card-year">20XX</span>
+        </div>
+        <div class="project-card" data-panel="panel-film-2" onclick="showDetail(this)">
+          <p class="project-card-title">film title three</p>
+          <span class="project-card-year">20XX</span>
+        </div>
       </div>
-      <div class="film-details">
+
+      <div class="project-detail-panel" id="panel-film-0">
         <div class="film-details-inner">
           <div class="detail-block">
             <span class="detail-label">production date</span>
@@ -654,25 +654,11 @@
               <li><span class="crew-role">editor</span><span class="crew-name">Name Here</span></li>
             </ul>
           </div>
-          <p class="film-synopsis">
-            Write a short synopsis here — one or two sentences describing what the film is about.
-            Replace this placeholder with your own words.
-          </p>
+          <p class="film-synopsis">Write a short synopsis here — one or two sentences describing what the film is about.</p>
         </div>
       </div>
-    </li>
 
-    <li class="film-item">
-      <div class="film-header" onclick="toggleFilm(this)">
-        <span class="film-title">film title two</span>
-        <span class="film-meta-right">
-          <span class="film-year">20XX</span>
-          <span class="film-toggle">
-            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </span>
-        </span>
-      </div>
-      <div class="film-details">
+      <div class="project-detail-panel" id="panel-film-1">
         <div class="film-details-inner">
           <div class="detail-block">
             <span class="detail-label">production date</span>
@@ -700,25 +686,11 @@
               <li><span class="crew-role">editor</span><span class="crew-name">Name Here</span></li>
             </ul>
           </div>
-          <p class="film-synopsis">
-            Write a short synopsis here — one or two sentences describing what the film is about.
-            Replace this placeholder with your own words.
-          </p>
+          <p class="film-synopsis">Write a short synopsis here — one or two sentences describing what the film is about.</p>
         </div>
       </div>
-    </li>
 
-    <li class="film-item">
-      <div class="film-header" onclick="toggleFilm(this)">
-        <span class="film-title">film title three</span>
-        <span class="film-meta-right">
-          <span class="film-year">20XX</span>
-          <span class="film-toggle">
-            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </span>
-        </span>
-      </div>
-      <div class="film-details">
+      <div class="project-detail-panel" id="panel-film-2">
         <div class="film-details-inner">
           <div class="detail-block">
             <span class="detail-label">production date</span>
@@ -746,29 +718,29 @@
               <li><span class="crew-role">editor</span><span class="crew-name">Name Here</span></li>
             </ul>
           </div>
-          <p class="film-synopsis">
-            Write a short synopsis here — one or two sentences describing what the film is about.
-            Replace this placeholder with your own words.
-          </p>
+          <p class="film-synopsis">Write a short synopsis here — one or two sentences describing what the film is about.</p>
         </div>
       </div>
-    </li>
+    </div>
+  </div>
 
-  </ul>
-
-  <p class="film-section-label" style="margin-top: 3rem;">motion graphics</p>
-  <ul class="film-list">
-    <li class="film-item">
-      <div class="film-header" onclick="toggleFilm(this)">
-        <span class="film-title">motion project one</span>
-        <span class="film-meta-right">
-          <span class="film-year">20XX</span>
-          <span class="film-toggle">
-            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </span>
-        </span>
+  <!-- Motion Graphics -->
+  <div class="portfolio-section">
+    <div class="portfolio-section-header" onclick="toggleSection(this)">
+      <span class="section-label-text">motion graphics</span>
+      <span class="section-toggle">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
+    </div>
+    <div class="portfolio-section-content">
+      <div class="project-grid">
+        <div class="project-card" data-panel="panel-motion-0" onclick="showDetail(this)">
+          <p class="project-card-title">motion project one</p>
+          <span class="project-card-year">20XX</span>
+        </div>
       </div>
-      <div class="film-details">
+
+      <div class="project-detail-panel" id="panel-motion-0">
         <div class="film-details-inner">
           <div class="detail-block">
             <span class="detail-label">client</span>
@@ -785,13 +757,56 @@
               <li><span class="crew-role">animator</span><span class="crew-name">Name Here</span></li>
             </ul>
           </div>
-          <p class="film-synopsis">
-            Brief description of the project — what it was for, what you made.
-          </p>
+          <p class="film-synopsis">Brief description of the project — what it was for, what you made.</p>
         </div>
       </div>
-    </li>
-  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BLOG ══ -->
+<section id="page-blog" class="page">
+  <div style="max-width: 720px; margin: 0 auto; padding: 4rem 2.5rem 6rem;">
+    <div class="page-header">
+      <h2 class="page-title">Blog</h2>
+    </div>
+
+    <ul class="blog-list" id="blog-list">
+      <li class="blog-post" onclick="openPost(0)">
+        <span class="blog-date">Jan<br>20XX</span>
+        <div>
+          <p class="blog-post-title">on making your first short film</p>
+          <p class="blog-post-excerpt">Some thoughts on the gap between the film in your head and the one you actually make — and why that gap is necessary.</p>
+          <span class="blog-tag">process</span>
+        </div>
+      </li>
+      <li class="blog-post" onclick="openPost(1)">
+        <span class="blog-date">Feb<br>20XX</span>
+        <div>
+          <p class="blog-post-title">cameras i've used and what i've learned</p>
+          <p class="blog-post-excerpt">A casual rundown of every camera that's passed through my hands, and how each one changed the way I see a frame.</p>
+          <span class="blog-tag">gear</span>
+        </div>
+      </li>
+      <li class="blog-post" onclick="openPost(2)">
+        <span class="blog-date">Mar<br>20XX</span>
+        <div>
+          <p class="blog-post-title">why i love long takes</p>
+          <p class="blog-post-excerpt">An unscientific argument for staying in the moment longer — and the directors who taught me why.</p>
+          <span class="blog-tag">craft</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div id="blog-detail">
+    <div style="max-width: 620px; margin: 0 auto; padding: 0 2.5rem;">
+      <button class="blog-back" onclick="closeBlogPost()">← back to blog</button>
+      <p class="blog-detail-label" id="detail-date"></p>
+      <h2 class="blog-detail-title" id="detail-title"></h2>
+      <div class="blog-detail-body" id="detail-body"></div>
+    </div>
+  </div>
 </section>
 
 <!-- ══ CONTACT ══ -->
@@ -838,56 +853,6 @@
   </div>
 </section>
 
-<!-- ══ BLOG ══ -->
-<section id="page-blog" class="page">
-  <div style="max-width: 720px; margin: 0 auto; padding: 4rem 2.5rem 6rem;">
-    <div class="page-header">
-      <h2 class="page-title">Blog</h2>
-    </div>
-
-    <ul class="blog-list" id="blog-list">
-
-      <li class="blog-post" onclick="openPost(0)">
-        <span class="blog-date">Jan<br>20XX</span>
-        <div>
-          <p class="blog-post-title">on making your first short film</p>
-          <p class="blog-post-excerpt">Some thoughts on the gap between the film in your head and the one you actually make — and why that gap is necessary.</p>
-          <span class="blog-tag">process</span>
-        </div>
-      </li>
-
-      <li class="blog-post" onclick="openPost(1)">
-        <span class="blog-date">Feb<br>20XX</span>
-        <div>
-          <p class="blog-post-title">cameras i've used and what i've learned</p>
-          <p class="blog-post-excerpt">A casual rundown of every camera that's passed through my hands, and how each one changed the way I see a frame.</p>
-          <span class="blog-tag">gear</span>
-        </div>
-      </li>
-
-      <li class="blog-post" onclick="openPost(2)">
-        <span class="blog-date">Mar<br>20XX</span>
-        <div>
-          <p class="blog-post-title">why i love long takes</p>
-          <p class="blog-post-excerpt">An unscientific argument for staying in the moment longer — and the directors who taught me why.</p>
-          <span class="blog-tag">craft</span>
-        </div>
-      </li>
-
-    </ul>
-  </div>
-
-  <!-- Blog detail (inside blog page so nav stays correct) -->
-  <div id="blog-detail">
-    <div style="max-width: 620px; margin: 0 auto; padding: 0 2.5rem;">
-      <button class="blog-back" onclick="closeBlogPost()">← back to blog</button>
-      <p class="blog-detail-label" id="detail-date"></p>
-      <h2 class="blog-detail-title" id="detail-title"></h2>
-      <div class="blog-detail-body" id="detail-body"></div>
-    </div>
-  </div>
-</section>
-
 <script>
   /* ── page navigation ── */
   function showPage(id) {
@@ -899,18 +864,32 @@
     closeBlogPost(true);
   }
 
-  /* ── film accordion ── */
-  function toggleFilm(header) {
-    const details = header.nextElementSibling;
-    const toggle = header.querySelector('.film-toggle');
-    const isOpen = details.classList.contains('open');
-    document.querySelectorAll('.film-details.open').forEach(d => {
-      d.classList.remove('open');
-      d.previousElementSibling.querySelector('.film-toggle').classList.remove('open');
-    });
-    if (!isOpen) {
-      details.classList.add('open');
-      toggle.classList.add('open');
+  /* ── portfolio section toggle ── */
+  function toggleSection(header) {
+    const content = header.nextElementSibling;
+    const toggle = header.querySelector('.section-toggle');
+    const isOpen = content.classList.contains('open');
+    content.classList.toggle('open', !isOpen);
+    toggle.classList.toggle('open', !isOpen);
+    if (isOpen) {
+      content.querySelectorAll('.project-card.active').forEach(c => c.classList.remove('active'));
+      content.querySelectorAll('.project-detail-panel.open').forEach(p => p.classList.remove('open'));
+    }
+  }
+
+  /* ── project card detail ── */
+  function showDetail(card) {
+    const section = card.closest('.portfolio-section-content');
+    const panelId = card.dataset.panel;
+    const panel = document.getElementById(panelId);
+    const isActive = card.classList.contains('active');
+
+    section.querySelectorAll('.project-card').forEach(c => c.classList.remove('active'));
+    section.querySelectorAll('.project-detail-panel').forEach(p => p.classList.remove('open'));
+
+    if (!isActive) {
+      card.classList.add('active');
+      panel.classList.add('open');
     }
   }
 
