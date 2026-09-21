@@ -802,7 +802,7 @@
            No attribute = shows the shared gray placeholder automatically.
            ══════════════════════════════════════════════════════════════════ -->
       <div class="project-grid">
-        <div class="project-card has-thumb" data-panel="panel-film-0" onclick="showDetail(this)">
+        <div class="project-card has-thumb" data-panel="panel-film-0" data-thumb="https://images.nguyenquochieu.work/BTBR3.jpg" onclick="showDetail(this)">
           <p class="project-card-title">Trước khi tiếng chuông vang</p>
           <span class="project-card-year">2026</span>
         </div>
@@ -849,6 +849,15 @@
             <span class="detail-value">Nguyễn Mai Trang, Đỗ Thị Hạnh Duyên, Nguyễn Thúy Ngà</span>
           </div>
           <p class="film-synopsis"></p>
+
+          <button class="view-project-btn" onclick="toggleMedia(this)" data-i18n="media.view">xem ảnh & video →</button>
+          <div class="project-media">
+            <div class="media-gallery">
+              <img src="https://images.nguyenquochieu.work/BTBR1.jpg" alt="Trước khi tiếng chuông vang — ảnh 1">
+              <img src="https://images.nguyenquochieu.work/BTBR2.jpg" alt="Trước khi tiếng chuông vang — ảnh 2">
+              <img src="https://images.nguyenquochieu.work/BTBR3.jpg" alt="Trước khi tiếng chuông vang — ảnh 3">
+            </div>
+          </div>
         </div>
       </div>
 
@@ -893,7 +902,7 @@
             </div>
             <!-- Paste ANY YouTube link format into data-youtube below (a full watch link,
                  a youtu.be share link, or just the bare video ID) — it's parsed automatically. -->
-            <div class="media-video" data-youtube="https://youtu.be/IsbBoQBWmaE"></div>
+            <div class="media-video" data-youtube="https://youtu.be/9ACv6ITFmnk"></div>
           </div>
         </div>
       </div>
