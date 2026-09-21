@@ -30,6 +30,8 @@
     font-size: 18px;
     line-height: 1.6;
     min-height: 100vh;
+    /* Scales the whole site to look like it's zoomed in at 130% */
+    zoom: 1.3;
   }
 
   /* ── NAV ── */
@@ -304,6 +306,9 @@
     grid-template-columns: repeat(3, 1fr);
     border: 0.5px solid var(--border);
     border-bottom: none;
+    /* Body is already zoomed to 1.3; this multiplies on top of that so the
+       cards land at ~1.7x (170%) overall while the rest of the site stays at 1.3x. */
+    zoom: 1.3077;
   }
 
   .project-card {
@@ -983,9 +988,9 @@
       </div>
       <div class="portfolio-section-content">
         <div class="project-grid">
-          <div class="project-card has-thumb" data-panel="panel-collab-film-0" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
-            <p class="project-card-title" data-i18n="card.collab_film1">tên phim một</p>
-            <span class="project-card-year">20XX</span>
+          <div class="project-card has-thumb" data-panel="panel-collab-film-0" onclick="showDetail(this)" style="background-image:url('https://img.youtube.com/vi/OsNksQrKftM/hqdefault.jpg')">
+            <p class="project-card-title">Thái-Nguyenese</p>
+            <span class="project-card-year">2026</span>
           </div>
         </div>
 
@@ -993,35 +998,32 @@
           <div class="film-details-inner">
             <div class="detail-block">
               <span class="detail-label" data-i18n="detail.date">ngày sản xuất</span>
-              <span class="detail-value" data-i18n="value.date">Tháng–Tháng, Năm</span>
-            </div>
-            <div class="detail-block">
-              <span class="detail-label" data-i18n="detail.format">định dạng</span>
-              <span class="detail-value" data-i18n="value.format">digital / 16mm / v.v.</span>
-            </div>
-            <div class="detail-block">
-              <span class="detail-label" data-i18n="detail.duration">thời lượng</span>
-              <span class="detail-value" data-i18n="value.duration">XX phút</span>
+              <span class="detail-value">2026</span>
             </div>
             <div class="detail-block">
               <span class="detail-label" data-i18n="detail.my_role">vai trò của tôi</span>
-              <span class="detail-value" data-i18n="value.role_ex1">vd: quay phim / dựng phim / âm thanh</span>
+              <span class="detail-value">quay phim</span>
             </div>
             <div class="detail-block" style="grid-column: 1 / -1;">
               <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
               <ul class="crew-list">
-                <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name">Name Here</span></li>
-                <li><span class="crew-role" data-i18n="crew.producer">nhà sản xuất</span><span class="crew-name">Name Here</span></li>
-                <li><span class="crew-role" data-i18n="crew.dop">quay phim</span><span class="crew-name">Name Here</span></li>
-                <li><span class="crew-role" data-i18n="crew.sound">âm thanh</span><span class="crew-name">Name Here</span></li>
-                <li><span class="crew-role" data-i18n="crew.editor">dựng phim</span><span class="crew-name">Name Here</span></li>
+                <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name">Nguyễn Xuân Bách</span></li>
+                <li><span class="crew-role" data-i18n="crew.dop">quay phim</span><span class="crew-name">Nguyễn Quốc Hiếu, Nguyễn Phan Thái Vũ</span></li>
+                <li><span class="crew-role" data-i18n="crew.assistant_director">phó đạo diễn</span><span class="crew-name">Nguyễn Phan Thái Vũ</span></li>
               </ul>
             </div>
             <div class="detail-block" style="grid-column: 1 / -1;">
               <span class="detail-label" data-i18n="detail.actors">diễn viên</span>
-              <span class="detail-value" data-i18n="value.name_here">Tên ở đây</span>
+              <span class="detail-value">Đinh Thiên Trang</span>
             </div>
-            <p class="film-synopsis" data-i18n="synopsis.write">Viết tóm tắt ngắn ở đây — một hoặc hai câu mô tả nội dung phim.</p>
+            <p class="film-synopsis">Một chàng trai từ Thái Nguyên, người từng nói dối rằng mình đến từ Hà Nội nay trở về quê hương để làm một bộ phim. Đây là câu chuyện đằng sau những thước phim đó: hành trình, con người, và những con đường yên tĩnh đã nuôi dưỡng anh. Thuộc về một nơi có nghĩa là gì? Và điều gì xảy ra khi bạn ngừng chạy trốn khỏi nơi mình bắt đầu?</p>
+
+            <button class="view-project-btn" onclick="toggleMedia(this)" data-i18n="media.view">xem ảnh & video →</button>
+            <div class="project-media">
+              <div class="media-video">
+                <iframe src="https://www.youtube.com/embed/OsNksQrKftM" title="Thái-Nguyenese" allowfullscreen></iframe>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1300,7 +1302,7 @@
     'group.made_title': 'what I make', 'group.made_subtitle': 'projects I directed / led',
     'group.helped_title': 'what I helped make', 'group.helped_subtitle': 'projects I participated in / crewed on',
     'section.short_films': 'short films', 'section.other_stuff': 'other stuff', 'section.other': 'other projects',
-    'card.film3': 'not yet', 'card.collab_film1': 'film title one',
+    'card.film3': 'not yet',
     'card.motion1': 'project one', 'card.project1': 'project title one',
     'detail.date': 'production date', 'detail.format': 'format', 'detail.duration': 'duration',
     'detail.status': 'status', 'detail.crew': 'crew', 'detail.client': 'client', 'detail.actors': 'cast',
@@ -1310,6 +1312,7 @@
     'value.role_ex1': 'e.g. cinematographer / editor / sound',
     'value.role_ex2': 'e.g. assistant editor / gaffer / production assistant',
     'crew.director': 'director', 'crew.producer': 'producer', 'crew.dop': 'd.o.p.', 'crew.writer': 'writer',
+    'crew.assistant_director': 'assistant director',
     'crew.sound': 'sound', 'crew.editor': 'editor', 'crew.collaborator': 'collaborator', 'crew.your_name': 'Your Name',
     'synopsis.write': 'Write a short synopsis here — one or two sentences describing what the film is about.',
     'synopsis.made': 'Brief description of the project — what it was for, what you made.',
