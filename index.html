@@ -77,6 +77,25 @@
   .nav-links a:hover,
   .nav-links a.active { color: var(--fg); }
 
+  .lang-toggle {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--fg);
+    background: transparent;
+    border: 0.5px solid var(--border-hover);
+    border-radius: 20px;
+    padding: 3px 11px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .lang-toggle:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
   /* ── PAGES ── */
   .page {
     display: none;
@@ -94,7 +113,32 @@
     padding: 0 2.5rem;
     max-width: 780px;
     margin: 0 auto;
+    position: relative;
   }
+
+  /* To use a GIF (or any image) as the homepage background later:
+     1. Uncomment the two rules below.
+     2. Set the url() to your file, e.g. url('home-bg.gif') if it sits next
+        to this HTML file, or a hosted image URL.
+     The dark scrim keeps the text readable on top of a busy image. */
+  /*
+  #page-home {
+    background-image: url('home-bg.gif');
+    background-size: cover;
+    background-position: center;
+  }
+  #page-home::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(245,242,237,0.82);
+    z-index: 0;
+  }
+  #page-home > * {
+    position: relative;
+    z-index: 1;
+  }
+  */
 
   #page-home.active { display: flex; }
 
@@ -172,6 +216,27 @@
     color: var(--fg);
   }
 
+  /* Portfolio top-level groups (made vs. participated in) */
+  .portfolio-group {
+    margin-bottom: 3.5rem;
+  }
+
+  .portfolio-group-title {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--fg);
+    margin-bottom: 0.3rem;
+  }
+
+  .portfolio-group-subtitle {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 1.6rem;
+  }
+
   /* Portfolio collapsible sections */
   .portfolio-section {
     border-top: 0.5px solid var(--border);
@@ -247,13 +312,38 @@
     border-bottom: 0.5px solid var(--border);
     cursor: pointer;
     transition: background 0.2s;
+    position: relative;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 
   .project-card:nth-child(3n) { border-right: none; }
 
-  .project-card:hover { background: rgba(26,23,16,0.04); }
+  .project-card:not(.has-thumb):hover { background: rgba(26,23,16,0.04); }
 
-  .project-card.active { background: rgba(26,23,16,0.07); }
+  .project-card:not(.has-thumb).active { background: rgba(26,23,16,0.07); }
+
+  /* Card with a thumbnail image as its background (set via inline
+     style="background-image:url('...')" on the .project-card element) */
+  .project-card.has-thumb {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .project-card.has-thumb::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(26,23,16,0.1) 0%, rgba(26,23,16,0.78) 100%);
+    transition: background 0.2s;
+  }
+
+  .project-card.has-thumb:hover::before,
+  .project-card.has-thumb.active::before {
+    background: linear-gradient(180deg, rgba(26,23,16,0.25) 0%, rgba(26,23,16,0.88) 100%);
+  }
 
   .project-card-title {
     font-size: 0.95rem;
@@ -261,12 +351,21 @@
     color: var(--fg);
     line-height: 1.35;
     margin-bottom: 0.35rem;
+    position: relative;
+    z-index: 1;
   }
 
   .project-card-year {
     font-family: var(--mono);
     font-size: 11px;
     color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-card.has-thumb .project-card-title,
+  .project-card.has-thumb .project-card-year {
+    color: #f5f2ed;
   }
 
   /* Detail panel — spans full width below grid */
@@ -333,6 +432,74 @@
     line-height: 1.7;
     border-left: 1.5px solid var(--border-hover);
     padding-left: 1rem;
+  }
+
+  /* ── PROJECT MEDIA (photos / youtube) ── */
+  .view-project-btn {
+    grid-column: 1 / -1;
+    justify-self: start;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--fg);
+    background: transparent;
+    border: 0.5px solid var(--border-hover);
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .view-project-btn:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .project-media {
+    display: none;
+    grid-column: 1 / -1;
+    margin-top: 0.4rem;
+    padding-top: 1.4rem;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .project-media.open {
+    display: block;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .media-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .media-gallery img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    display: block;
+  }
+
+  .media-video {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 2px;
+    border: 0.5px solid var(--border);
+  }
+
+  .media-video iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
 
   /* ── CONTACT ── */
@@ -575,167 +742,203 @@
 <nav>
   <a class="nav-logo" onclick="showPage('home')">Nguyễn Quốc Hiếu</a>
   <ul class="nav-links">
-    <li><a onclick="showPage('home')" data-page="home">home</a></li>
-    <li><a onclick="showPage('portfolio')" data-page="portfolio">portfolio</a></li>
-    <li><a onclick="showPage('blog')" data-page="blog">blog</a></li>
-    <li><a onclick="showPage('contact')" data-page="contact">contact</a></li>
+    <li><a onclick="showPage('home')" data-page="home" data-i18n="nav.home">trang chủ</a></li>
+    <li><a onclick="showPage('portfolio')" data-page="portfolio" data-i18n="nav.portfolio">dự án</a></li>
+    <li><a onclick="showPage('blog')" data-page="blog" data-i18n="nav.blog">blog</a></li>
+    <li><a onclick="showPage('contact')" data-page="contact" data-i18n="nav.contact">liên hệ</a></li>
+    <li><button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">EN</button></li>
   </ul>
 </nav>
 
 <!-- ══ HOME ══ -->
 <section id="page-home" class="page active">
-  <span class="home-eyebrow">làm phim, dạy học</span>
+  <span class="home-eyebrow" data-i18n="home.eyebrow">làm phim, dạy học</span>
   <h1 class="home-headline">
   </h1>
-  <p class="home-bio">
-    Based in Hanoi.
+  <p class="home-bio" data-i18n="home.bio">
+    Sống tại Hà Nội.
   </p>
   <div class="home-links">
-    <a onclick="showPage('portfolio')">see work →</a>
-    <a onclick="showPage('contact')">get in touch →</a>
+    <a onclick="showPage('portfolio')" data-i18n="home.link1">xem tác phẩm →</a>
+    <a onclick="showPage('contact')" data-i18n="home.link2">liên hệ →</a>
   </div>
 </section>
 
 <!-- ══ PORTFOLIO ══ -->
 <section id="page-portfolio" class="page">
   <div class="page-header">
-    <h2 class="page-title">Portfolio</h2>
+    <h2 class="page-title" data-i18n="page.portfolio">Dự án</h2>
   </div>
+
+  <!-- ── GROUP: STUFF I MAKE ── -->
+  <div class="portfolio-group">
+    <p class="portfolio-group-title" data-i18n="group.made_title">thứ tôi làm</p>
+    <p class="portfolio-group-subtitle" data-i18n="group.made_subtitle">các thứ tôi tham gia làm chính</p>
 
   <!-- Short Films -->
   <div class="portfolio-section">
     <div class="portfolio-section-header" onclick="toggleSection(this)">
-      <span class="section-label-text">short films</span>
+      <span class="section-label-text" data-i18n="section.short_films">phim ngắn</span>
       <span class="section-toggle">
         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </span>
     </div>
     <div class="portfolio-section-content">
+      <!-- Every card below already has a placeholder thumbnail via class="has-thumb"
+           and an inline style="background-image:url(...)". To swap in your own photo,
+           just replace that url('...') with a file path (e.g. 'images/photo.jpg' next
+           to this HTML file) or a hosted image URL — same pattern on every card. -->
       <div class="project-grid">
-        <div class="project-card" data-panel="panel-film-0" onclick="showDetail(this)">
-          <p class="project-card-title">film title one</p>
-          <span class="project-card-year">20XX</span>
+        <div class="project-card has-thumb" data-panel="panel-film-0" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
+          <p class="project-card-title">Trước khi tiếng chuông vang</p>
+          <span class="project-card-year">2026</span>
         </div>
-        <div class="project-card" data-panel="panel-film-1" onclick="showDetail(this)">
-          <p class="project-card-title">film title two</p>
-          <span class="project-card-year">20XX</span>
+        <div class="project-card has-thumb" data-panel="panel-film-1" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23a89f8c%27/%3E%3Ctext x=%2750%25%27 y=%2745%25%27 font-family=%27monospace%27 font-size=%2714%27 fill=%27%23f5f2ed%27 text-anchor=%27middle%27%3Ethumbnail placeholder%3C/text%3E%3Ctext x=%2750%25%27 y=%2758%25%27 font-family=%27monospace%27 font-size=%2711%27 fill=%27%23f5f2ed%27 text-anchor=%27middle%27%3Ereplace with your film still%3C/text%3E%3C/svg%3E')">
+          <p class="project-card-title">Đường về nhà của thầy Hiếu</p>
+          <span class="project-card-year">2026</span>
         </div>
-        <div class="project-card" data-panel="panel-film-2" onclick="showDetail(this)">
-          <p class="project-card-title">film title three</p>
-          <span class="project-card-year">20XX</span>
+        <div class="project-card has-thumb" data-panel="panel-film-2" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
+          <p class="project-card-title" data-i18n="card.film3">(chưa có)</p>
+          <span class="project-card-year">XXXX</span>
         </div>
       </div>
 
       <div class="project-detail-panel" id="panel-film-0">
         <div class="film-details-inner">
           <div class="detail-block">
-            <span class="detail-label">production date</span>
-            <span class="detail-value">Month–Month, Year</span>
+            <span class="detail-label" data-i18n="detail.date">ngày sản xuất</span>
+            <span class="detail-value">Tháng 3, 2026</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">format</span>
-            <span class="detail-value">digital / 16mm / etc.</span>
+            <span class="detail-label" data-i18n="detail.format">định dạng</span>
+            <span class="detail-value">digital</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">duration</span>
-            <span class="detail-value">XX min</span>
+            <span class="detail-label" data-i18n="detail.duration">thời lượng</span>
+            <span class="detail-value">15 phút</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">status</span>
-            <span class="detail-value">completed / in post / etc.</span>
+            <span class="detail-label" data-i18n="detail.status">trạng thái</span>
+            <span class="detail-value">hoàn thành</span>
           </div>
           <div class="detail-block" style="grid-column: 1 / -1;">
-            <span class="detail-label">crew</span>
+            <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
             <ul class="crew-list">
-              <li><span class="crew-role">director</span><span class="crew-name">Your Name</span></li>
-              <li><span class="crew-role">producer</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role">d.o.p.</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role">sound</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role">editor</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name">Trần Huyền</span></li>
+              <li><span class="crew-role" data-i18n="crew.producer">nhà sản xuất</span><span class="crew-name">Nguyễn Quốc Hiếu</span></li>
+              <li><span class="crew-role" data-i18n="crew.writer">biên kịch</span><span class="crew-name">Trần Huyền, Trần Bảo Ngân, Phạm Kim Ngân</span></li>
+              <li><span class="crew-role" data-i18n="crew.dop">quay phim</span><span class="crew-name">Nguyễn Việt Trung, Nguyễn Quốc Hiếu</span></li>
+              <li><span class="crew-role" data-i18n="crew.editor">dựng phim</span><span class="crew-name">Nguyễn Việt Trung, Nguyễn Quốc Hiếu</span></li>
             </ul>
           </div>
-          <p class="film-synopsis">Write a short synopsis here — one or two sentences describing what the film is about.</p>
+          <div class="detail-block" style="grid-column: 1 / -1;">
+            <span class="detail-label" data-i18n="detail.actors">diễn viên</span>
+            <span class="detail-value">Nguyễn Mai Trang, Đỗ Thị Hạnh Duyên, Nguyễn Thúy Ngà</span>
+          </div>
+          <p class="film-synopsis"></p>
         </div>
       </div>
 
       <div class="project-detail-panel" id="panel-film-1">
         <div class="film-details-inner">
           <div class="detail-block">
-            <span class="detail-label">production date</span>
-            <span class="detail-value">Month–Month, Year</span>
+            <span class="detail-label" data-i18n="detail.date">ngày sản xuất</span>
+            <span class="detail-value">Tháng 7, 2026</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">format</span>
-            <span class="detail-value">digital / 16mm / etc.</span>
+            <span class="detail-label" data-i18n="detail.format">định dạng</span>
+            <span class="detail-value">digital</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">duration</span>
-            <span class="detail-value">XX min</span>
+            <span class="detail-label" data-i18n="detail.duration">thời lượng</span>
+            <span class="detail-value">9 phút</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">status</span>
-            <span class="detail-value">completed / in post / etc.</span>
+            <span class="detail-label" data-i18n="detail.status">trạng thái</span>
+            <span class="detail-value">hoàn thành</span>
           </div>
           <div class="detail-block" style="grid-column: 1 / -1;">
-            <span class="detail-label">crew</span>
+            <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
             <ul class="crew-list">
-              <li><span class="crew-role">director</span><span class="crew-name">Your Name</span></li>
-              <li><span class="crew-role">producer</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role">d.o.p.</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role">sound</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role">editor</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name">Nguyễn Quốc Hiếu</span></li>
+              <li><span class="crew-role" data-i18n="crew.producer">nhà sản xuất</span><span class="crew-name">Nguyễn Quốc Hiếu</span></li>
+              <li><span class="crew-role" data-i18n="crew.writer">biên kịch</span><span class="crew-name">Nguyễn Quốc Hiếu</span></li>
+              <li><span class="crew-role" data-i18n="crew.dop">quay phim</span><span class="crew-name">Khâu Bảo Thành</span></li>
+              <li><span class="crew-role" data-i18n="crew.editor">dựng phim</span><span class="crew-name">Khâu Bảo Thành</span></li>
             </ul>
           </div>
-          <p class="film-synopsis">Write a short synopsis here — one or two sentences describing what the film is about.</p>
+          <div class="detail-block" style="grid-column: 1 / -1;">
+            <span class="detail-label" data-i18n="detail.actors">diễn viên</span>
+            <span class="detail-value">Nguyễn Quốc Hiếu, Nguyễn Hoàng Lâm, Nguyễn Xuân Bách, Tùng Lâm, Đặng Quỳnh Trang, Trần Bảo Ngân</span>
+          </div>
+          <p class="film-synopsis">Vào một buổi tối thường nhật, thầy Hiếu đi về nhà.</p>
+
+          <button class="view-project-btn" onclick="toggleMedia(this)" data-i18n="media.view">xem ảnh & video →</button>
+          <div class="project-media">
+            <div class="media-gallery">
+              <!-- Replace these src values with your own photos (a file path like "images/photo1.jpg" next to this HTML file, or a hosted image URL) -->
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%23ddd8cc'/%3E%3Ctext x='50%25' y='50%25' font-family='monospace' font-size='16' fill='%237a7669' text-anchor='middle' dy='.3em'%3Eảnh 1%3C/text%3E%3C/svg%3E" alt="Đường về nhà của thầy Hiếu — ảnh 1">
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%23ddd8cc'/%3E%3Ctext x='50%25' y='50%25' font-family='monospace' font-size='16' fill='%237a7669' text-anchor='middle' dy='.3em'%3Eảnh 2%3C/text%3E%3C/svg%3E" alt="Đường về nhà của thầy Hiếu — ảnh 2">
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%23ddd8cc'/%3E%3Ctext x='50%25' y='50%25' font-family='monospace' font-size='16' fill='%237a7669' text-anchor='middle' dy='.3em'%3Eảnh 3%3C/text%3E%3C/svg%3E" alt="Đường về nhà của thầy Hiếu — ảnh 3">
+            </div>
+            <!-- Replace VIDEO_ID below with your real YouTube video ID (the part after watch?v= in the URL) -->
+            <div class="media-video">
+              <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Đường về nhà của thầy Hiếu" allowfullscreen></iframe>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="project-detail-panel" id="panel-film-2">
         <div class="film-details-inner">
           <div class="detail-block">
-            <span class="detail-label">production date</span>
-            <span class="detail-value">Month–Month, Year</span>
+            <span class="detail-label" data-i18n="detail.date">ngày sản xuất</span>
+            <span class="detail-value" data-i18n="value.date">Tháng–Tháng, Năm</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">format</span>
-            <span class="detail-value">digital / 16mm / etc.</span>
+            <span class="detail-label" data-i18n="detail.format">định dạng</span>
+            <span class="detail-value" data-i18n="value.format">digital / 16mm / v.v.</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">duration</span>
-            <span class="detail-value">XX min</span>
+            <span class="detail-label" data-i18n="detail.duration">thời lượng</span>
+            <span class="detail-value" data-i18n="value.duration">XX phút</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">status</span>
-            <span class="detail-value">completed / in post / etc.</span>
+            <span class="detail-label" data-i18n="detail.status">trạng thái</span>
+            <span class="detail-value" data-i18n="value.status">hoàn thành / đang hậu kỳ / v.v.</span>
           </div>
           <div class="detail-block" style="grid-column: 1 / -1;">
-            <span class="detail-label">crew</span>
+            <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
             <ul class="crew-list">
-              <li><span class="crew-role">director</span><span class="crew-name">Your Name</span></li>
-              <li><span class="crew-role">producer</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role">d.o.p.</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role">sound</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role">editor</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name" data-i18n="crew.your_name">Tên bạn</span></li>
+              <li><span class="crew-role" data-i18n="crew.producer">nhà sản xuất</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role" data-i18n="crew.dop">quay phim</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role" data-i18n="crew.sound">âm thanh</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role" data-i18n="crew.editor">dựng phim</span><span class="crew-name">Name Here</span></li>
             </ul>
           </div>
-          <p class="film-synopsis">Write a short synopsis here — one or two sentences describing what the film is about.</p>
+          <div class="detail-block" style="grid-column: 1 / -1;">
+            <span class="detail-label" data-i18n="detail.actors">diễn viên</span>
+            <span class="detail-value" data-i18n="value.name_here">Tên ở đây</span>
+          </div>
+          <p class="film-synopsis" data-i18n="synopsis.write">Viết tóm tắt ngắn ở đây — một hoặc hai câu mô tả nội dung phim.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Motion Graphics -->
+  <!-- Others -->
   <div class="portfolio-section">
     <div class="portfolio-section-header" onclick="toggleSection(this)">
-      <span class="section-label-text">motion graphics</span>
+      <span class="section-label-text" data-i18n="section.other_stuff">Các thứ khác</span>
       <span class="section-toggle">
         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </span>
     </div>
     <div class="portfolio-section-content">
       <div class="project-grid">
-        <div class="project-card" data-panel="panel-motion-0" onclick="showDetail(this)">
-          <p class="project-card-title">motion project one</p>
+        <div class="project-card has-thumb" data-panel="panel-motion-0" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
+          <p class="project-card-title" data-i18n="card.motion1">dự án một</p>
           <span class="project-card-year">20XX</span>
         </div>
       </div>
@@ -743,25 +946,131 @@
       <div class="project-detail-panel" id="panel-motion-0">
         <div class="film-details-inner">
           <div class="detail-block">
-            <span class="detail-label">client</span>
-            <span class="detail-value">Client Name</span>
+            <span class="detail-label" data-i18n="detail.client">khách hàng</span>
+            <span class="detail-value" data-i18n="value.client_name">Tên khách hàng</span>
           </div>
           <div class="detail-block">
-            <span class="detail-label">year</span>
+            <span class="detail-label" data-i18n="detail.year">năm</span>
             <span class="detail-value">20XX</span>
           </div>
           <div class="detail-block" style="grid-column: 1 / -1;">
-            <span class="detail-label">crew</span>
+            <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
             <ul class="crew-list">
-              <li><span class="crew-role">director</span><span class="crew-name">Your Name</span></li>
-              <li><span class="crew-role">animator</span><span class="crew-name">Name Here</span></li>
+              <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name" data-i18n="crew.your_name">Tên bạn</span></li>
+              <li><span class="crew-role" data-i18n="crew.collaborator">cộng tác viên</span><span class="crew-name">Name Here</span></li>
             </ul>
           </div>
-          <p class="film-synopsis">Brief description of the project — what it was for, what you made.</p>
+          <p class="film-synopsis" data-i18n="synopsis.made">Mô tả ngắn gọn về dự án — mục đích và những gì bạn đã làm.</p>
         </div>
       </div>
     </div>
   </div>
+
+  </div> <!-- /portfolio-group: what I make -->
+
+  <!-- ── GROUP: STUFF I PARTICIPATED IN ── -->
+  <div class="portfolio-group">
+    <p class="portfolio-group-title" data-i18n="group.helped_title">những gì tôi tham gia thực hiện</p>
+    <p class="portfolio-group-subtitle" data-i18n="group.helped_subtitle">các dự án tôi tham gia / làm ê-kíp</p>
+
+    <!-- Short Films (participated) -->
+    <div class="portfolio-section">
+      <div class="portfolio-section-header" onclick="toggleSection(this)">
+        <span class="section-label-text" data-i18n="section.short_films">phim ngắn</span>
+        <span class="section-toggle">
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+      </div>
+      <div class="portfolio-section-content">
+        <div class="project-grid">
+          <div class="project-card has-thumb" data-panel="panel-collab-film-0" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
+            <p class="project-card-title" data-i18n="card.collab_film1">tên phim một</p>
+            <span class="project-card-year">20XX</span>
+          </div>
+        </div>
+
+        <div class="project-detail-panel" id="panel-collab-film-0">
+          <div class="film-details-inner">
+            <div class="detail-block">
+              <span class="detail-label" data-i18n="detail.date">ngày sản xuất</span>
+              <span class="detail-value" data-i18n="value.date">Tháng–Tháng, Năm</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label" data-i18n="detail.format">định dạng</span>
+              <span class="detail-value" data-i18n="value.format">digital / 16mm / v.v.</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label" data-i18n="detail.duration">thời lượng</span>
+              <span class="detail-value" data-i18n="value.duration">XX phút</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label" data-i18n="detail.my_role">vai trò của tôi</span>
+              <span class="detail-value" data-i18n="value.role_ex1">vd: quay phim / dựng phim / âm thanh</span>
+            </div>
+            <div class="detail-block" style="grid-column: 1 / -1;">
+              <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
+              <ul class="crew-list">
+                <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name">Name Here</span></li>
+                <li><span class="crew-role" data-i18n="crew.producer">nhà sản xuất</span><span class="crew-name">Name Here</span></li>
+                <li><span class="crew-role" data-i18n="crew.dop">quay phim</span><span class="crew-name">Name Here</span></li>
+                <li><span class="crew-role" data-i18n="crew.sound">âm thanh</span><span class="crew-name">Name Here</span></li>
+                <li><span class="crew-role" data-i18n="crew.editor">dựng phim</span><span class="crew-name">Name Here</span></li>
+              </ul>
+            </div>
+            <div class="detail-block" style="grid-column: 1 / -1;">
+              <span class="detail-label" data-i18n="detail.actors">diễn viên</span>
+              <span class="detail-value" data-i18n="value.name_here">Tên ở đây</span>
+            </div>
+            <p class="film-synopsis" data-i18n="synopsis.write">Viết tóm tắt ngắn ở đây — một hoặc hai câu mô tả nội dung phim.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other Projects (participated) -->
+    <div class="portfolio-section">
+      <div class="portfolio-section-header" onclick="toggleSection(this)">
+        <span class="section-label-text" data-i18n="section.other">dự án khác</span>
+        <span class="section-toggle">
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+      </div>
+      <div class="portfolio-section-content">
+        <div class="project-grid">
+          <div class="project-card has-thumb" data-panel="panel-collab-other-0" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
+            <p class="project-card-title" data-i18n="card.project1">tên dự án một</p>
+            <span class="project-card-year">20XX</span>
+          </div>
+        </div>
+
+        <div class="project-detail-panel" id="panel-collab-other-0">
+          <div class="film-details-inner">
+            <div class="detail-block">
+              <span class="detail-label" data-i18n="detail.client_production">khách hàng / đơn vị sản xuất</span>
+              <span class="detail-value" data-i18n="value.name_here">Tên ở đây</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label" data-i18n="detail.year">năm</span>
+              <span class="detail-value">20XX</span>
+            </div>
+            <div class="detail-block" style="grid-column: 1 / -1;">
+              <span class="detail-label" data-i18n="detail.my_role">vai trò của tôi</span>
+              <span class="detail-value" data-i18n="value.role_ex2">vd: trợ lý dựng phim / gaffer / trợ lý sản xuất</span>
+            </div>
+            <div class="detail-block" style="grid-column: 1 / -1;">
+              <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
+              <ul class="crew-list">
+                <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name">Name Here</span></li>
+                <li><span class="crew-role" data-i18n="crew.producer">nhà sản xuất</span><span class="crew-name">Name Here</span></li>
+              </ul>
+            </div>
+            <p class="film-synopsis" data-i18n="synopsis.helped">Mô tả ngắn gọn về dự án — mục đích và vai trò của bạn trong đó.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- /portfolio-group: what I helped make -->
 </section>
 
 <!-- ══ BLOG ══ -->
@@ -773,27 +1082,27 @@
 
     <ul class="blog-list" id="blog-list">
       <li class="blog-post" onclick="openPost(0)">
-        <span class="blog-date">Jan<br>20XX</span>
+        <span class="blog-date" data-i18n="blog.date">Th<br>20XX</span>
         <div>
-          <p class="blog-post-title">on making your first short film</p>
-          <p class="blog-post-excerpt">Some thoughts on the gap between the film in your head and the one you actually make — and why that gap is necessary.</p>
-          <span class="blog-tag">process</span>
+          <p class="blog-post-title" data-i18n="blog.title1">tiêu đề bài viết một</p>
+          <p class="blog-post-excerpt" data-i18n="blog.excerpt">Viết đoạn tóm tắt ngắn cho bài viết này ở đây.</p>
+          <span class="blog-tag" data-i18n="blog.tag">thẻ</span>
         </div>
       </li>
       <li class="blog-post" onclick="openPost(1)">
-        <span class="blog-date">Feb<br>20XX</span>
+        <span class="blog-date" data-i18n="blog.date">Th<br>20XX</span>
         <div>
-          <p class="blog-post-title">cameras i've used and what i've learned</p>
-          <p class="blog-post-excerpt">A casual rundown of every camera that's passed through my hands, and how each one changed the way I see a frame.</p>
-          <span class="blog-tag">gear</span>
+          <p class="blog-post-title" data-i18n="blog.title2">tiêu đề bài viết hai</p>
+          <p class="blog-post-excerpt" data-i18n="blog.excerpt">Viết đoạn tóm tắt ngắn cho bài viết này ở đây.</p>
+          <span class="blog-tag" data-i18n="blog.tag">thẻ</span>
         </div>
       </li>
       <li class="blog-post" onclick="openPost(2)">
-        <span class="blog-date">Mar<br>20XX</span>
+        <span class="blog-date" data-i18n="blog.date">Th<br>20XX</span>
         <div>
-          <p class="blog-post-title">why i love long takes</p>
-          <p class="blog-post-excerpt">An unscientific argument for staying in the moment longer — and the directors who taught me why.</p>
-          <span class="blog-tag">craft</span>
+          <p class="blog-post-title" data-i18n="blog.title3">tiêu đề bài viết ba</p>
+          <p class="blog-post-excerpt" data-i18n="blog.excerpt">Viết đoạn tóm tắt ngắn cho bài viết này ở đây.</p>
+          <span class="blog-tag" data-i18n="blog.tag">thẻ</span>
         </div>
       </li>
     </ul>
@@ -801,7 +1110,7 @@
 
   <div id="blog-detail">
     <div style="max-width: 620px; margin: 0 auto; padding: 0 2.5rem;">
-      <button class="blog-back" onclick="closeBlogPost()">← back to blog</button>
+      <button class="blog-back" onclick="closeBlogPost()" data-i18n="blog.back">← quay lại blog</button>
       <p class="blog-detail-label" id="detail-date"></p>
       <h2 class="blog-detail-title" id="detail-title"></h2>
       <div class="blog-detail-body" id="detail-body"></div>
@@ -813,41 +1122,41 @@
 <section id="page-contact" class="page">
   <div style="max-width: 620px; margin: 0 auto; padding: 4rem 2.5rem 6rem;">
     <div class="page-header">
-      <h2 class="page-title">Contact</h2>
+      <h2 class="page-title" data-i18n="page.contact">Liên hệ</h2>
     </div>
 
     <div class="contact-grid">
       <div class="contact-block">
-        <span class="contact-block-label">email</span>
+        <span class="contact-block-label" data-i18n="contact.email_label">email</span>
         <a href="mailto:quochieu9955@gmail.com">quochieu9955@mail.com</a>
       </div>
       <div class="contact-block">
-        <span class="contact-block-label">location</span>
-        <p>Hanoi, Vietnam</p>
+        <span class="contact-block-label" data-i18n="contact.location_label">vị trí</span>
+        <p data-i18n="contact.location_value">Hà Nội, Việt Nam</p>
       </div>
       <div class="contact-block">
-        <span class="contact-block-label">instagram</span>
+        <span class="contact-block-label" data-i18n="contact.instagram_label">instagram</span>
         <a href="https://instagram.com/hieukhongaiyeu" target="_blank">@hieukhongaiyeu</a>
       </div>
     </div>
 
     <div class="contact-form">
-      <p class="contact-form-title">or send a message directly —</p>
+      <p class="contact-form-title" data-i18n="contact.form_title">hoặc gửi tin nhắn trực tiếp —</p>
       <div class="form-row">
-        <label for="f-name">name</label>
-        <input type="text" id="f-name" placeholder="your name">
+        <label for="f-name" data-i18n="contact.name_label">tên</label>
+        <input type="text" id="f-name" placeholder="tên của bạn" data-i18n-placeholder="contact.name_ph">
       </div>
       <div class="form-row">
-        <label for="f-email">email</label>
+        <label for="f-email" data-i18n="contact.email_label2">email</label>
         <input type="email" id="f-email" placeholder="your@email.com">
       </div>
       <div class="form-row">
-        <label for="f-msg">message</label>
-        <textarea id="f-msg" placeholder="what's on your mind?"></textarea>
+        <label for="f-msg" data-i18n="contact.msg_label">lời nhắn</label>
+        <textarea id="f-msg" placeholder="bạn đang nghĩ gì?" data-i18n-placeholder="contact.msg_ph"></textarea>
       </div>
-      <button class="form-submit" onclick="handleSubmit()">send message →</button>
-      <p id="form-confirm" style="display:none; font-family: var(--mono); font-size:11px; color: var(--muted); margin-top:0.8rem; letter-spacing:0.1em;">
-        message sent — thank you.
+      <button class="form-submit" onclick="handleSubmit()" data-i18n="contact.submit">gửi tin nhắn →</button>
+      <p id="form-confirm" style="display:none; font-family: var(--mono); font-size:11px; color: var(--muted); margin-top:0.8rem; letter-spacing:0.1em;" data-i18n="contact.confirm">
+        đã gửi tin nhắn — cảm ơn bạn.
       </p>
     </div>
   </div>
@@ -893,40 +1202,72 @@
     }
   }
 
-  /* ── blog posts data ── */
+  /* ── view project media (photos / youtube) ── */
+  function toggleMedia(btn) {
+    const media = btn.nextElementSibling;
+    const isOpen = media.classList.contains('open');
+    media.classList.toggle('open', !isOpen);
+    const key = isOpen ? 'media.view' : 'media.hide';
+    btn.setAttribute('data-i18n', key);
+    btn.textContent = currentLang === 'vi' ? originalMediaText[key] : translations[key];
+  }
+
+  /* ── blog posts data (bilingual) ── */
   const posts = [
     {
-      date: 'January 20XX',
-      title: 'on making your first short film',
-      tag: 'process',
-      body: `<p>This is where your blog post goes. Write whatever you want here — thoughts on filmmaking, your process, what you learned on a shoot, a review of something you watched.</p>
-<p>You can have multiple paragraphs. Just copy the <code>&lt;p&gt;...&lt;/p&gt;</code> pattern for each one.</p>
-<p>Replace this placeholder text with your actual writing when you're ready.</p>`
+      vi: {
+        date: 'Tháng 20XX', title: 'tiêu đề bài viết một', tag: 'thẻ',
+        body: `<p>Viết nội dung bài viết ở đây.</p>
+<p>Bạn có thể viết nhiều đoạn văn. Chỉ cần sao chép mẫu <code>&lt;p&gt;...&lt;/p&gt;</code> cho mỗi đoạn.</p>`
+      },
+      en: {
+        date: 'Month 20XX', title: 'post title one', tag: 'tag',
+        body: `<p>Write your blog post content here.</p>
+<p>You can have multiple paragraphs. Just copy the <code>&lt;p&gt;...&lt;/p&gt;</code> pattern for each one.</p>`
+      }
     },
     {
-      date: 'February 20XX',
-      title: 'cameras i\'ve used and what i\'ve learned',
-      tag: 'gear',
-      body: `<p>This is where your second blog post goes. Write about any camera — your phone, a borrowed DSLR, anything.</p>
-<p>Replace this placeholder text with your actual writing when you're ready.</p>`
+      vi: {
+        date: 'Tháng 20XX', title: 'tiêu đề bài viết hai', tag: 'thẻ',
+        body: `<p>Viết nội dung bài viết ở đây.</p>
+<p>Bạn có thể viết nhiều đoạn văn. Chỉ cần sao chép mẫu <code>&lt;p&gt;...&lt;/p&gt;</code> cho mỗi đoạn.</p>`
+      },
+      en: {
+        date: 'Month 20XX', title: 'post title two', tag: 'tag',
+        body: `<p>Write your blog post content here.</p>
+<p>You can have multiple paragraphs. Just copy the <code>&lt;p&gt;...&lt;/p&gt;</code> pattern for each one.</p>`
+      }
     },
     {
-      date: 'March 20XX',
-      title: 'why i love long takes',
-      tag: 'craft',
-      body: `<p>This is where your third blog post goes.</p>
-<p>Replace this placeholder text with your actual writing when you're ready.</p>`
+      vi: {
+        date: 'Tháng 20XX', title: 'tiêu đề bài viết ba', tag: 'thẻ',
+        body: `<p>Viết nội dung bài viết ở đây.</p>
+<p>Bạn có thể viết nhiều đoạn văn. Chỉ cần sao chép mẫu <code>&lt;p&gt;...&lt;/p&gt;</code> cho mỗi đoạn.</p>`
+      },
+      en: {
+        date: 'Month 20XX', title: 'post title three', tag: 'tag',
+        body: `<p>Write your blog post content here.</p>
+<p>You can have multiple paragraphs. Just copy the <code>&lt;p&gt;...&lt;/p&gt;</code> pattern for each one.</p>`
+      }
     }
   ];
 
+  let openPostIndex = null;
+
   function openPost(i) {
-    const p = posts[i];
-    document.getElementById('detail-date').textContent = p.date + ' · ' + p.tag;
-    document.getElementById('detail-title').textContent = p.title;
-    document.getElementById('detail-body').innerHTML = p.body;
+    openPostIndex = i;
+    renderOpenPost();
     document.getElementById('blog-list').parentElement.style.display = 'none';
     document.getElementById('blog-detail').classList.add('active');
     window.scrollTo(0, 0);
+  }
+
+  function renderOpenPost() {
+    if (openPostIndex === null) return;
+    const p = posts[openPostIndex][currentLang];
+    document.getElementById('detail-date').textContent = p.date + ' · ' + p.tag;
+    document.getElementById('detail-title').textContent = p.title;
+    document.getElementById('detail-body').innerHTML = p.body;
   }
 
   function closeBlogPost(silent) {
@@ -934,6 +1275,7 @@
     if (list) list.parentElement.style.display = '';
     const detail = document.getElementById('blog-detail');
     if (detail) detail.classList.remove('active');
+    openPostIndex = null;
   }
 
   /* ── contact form ── */
@@ -947,6 +1289,100 @@
     document.getElementById('f-email').value = '';
     document.getElementById('f-msg').value = '';
   }
+
+  /* ── i18n (Vietnamese default, English toggle) ── */
+  const translations = {
+    'nav.home': 'home', 'nav.portfolio': 'portfolio', 'nav.blog': 'blog', 'nav.contact': 'contact',
+    'home.eyebrow': 'filmmaking, teaching',
+    'home.bio': 'Based in Hanoi.',
+    'home.link1': 'see work →', 'home.link2': 'get in touch →',
+    'page.portfolio': 'Portfolio', 'page.contact': 'Contact',
+    'group.made_title': 'what I make', 'group.made_subtitle': 'projects I directed / led',
+    'group.helped_title': 'what I helped make', 'group.helped_subtitle': 'projects I participated in / crewed on',
+    'section.short_films': 'short films', 'section.other_stuff': 'other stuff', 'section.other': 'other projects',
+    'card.film3': 'not yet', 'card.collab_film1': 'film title one',
+    'card.motion1': 'project one', 'card.project1': 'project title one',
+    'detail.date': 'production date', 'detail.format': 'format', 'detail.duration': 'duration',
+    'detail.status': 'status', 'detail.crew': 'crew', 'detail.client': 'client', 'detail.actors': 'cast',
+    'detail.client_production': 'client / production', 'detail.year': 'year', 'detail.my_role': 'my role',
+    'value.date': 'Month–Month, Year', 'value.format': 'digital / 16mm / etc.', 'value.duration': 'XX min',
+    'value.status': 'completed / in post / etc.', 'value.client_name': 'Client Name', 'value.name_here': 'Name Here',
+    'value.role_ex1': 'e.g. cinematographer / editor / sound',
+    'value.role_ex2': 'e.g. assistant editor / gaffer / production assistant',
+    'crew.director': 'director', 'crew.producer': 'producer', 'crew.dop': 'd.o.p.', 'crew.writer': 'writer',
+    'crew.sound': 'sound', 'crew.editor': 'editor', 'crew.collaborator': 'collaborator', 'crew.your_name': 'Your Name',
+    'synopsis.write': 'Write a short synopsis here — one or two sentences describing what the film is about.',
+    'synopsis.made': 'Brief description of the project — what it was for, what you made.',
+    'synopsis.helped': 'Brief description of the project — what it was for, what you did on it.',
+    'media.view': 'view photos & video →', 'media.hide': 'hide photos & video ↑',
+    'blog.date': 'Mon<br>20XX',
+    'blog.title1': 'post title one', 'blog.title2': 'post title two', 'blog.title3': 'post title three',
+    'blog.excerpt': 'Write a short excerpt or summary of this post here.',
+    'blog.tag': 'tag', 'blog.back': '← back to blog',
+    'contact.email_label': 'email', 'contact.location_label': 'location', 'contact.location_value': 'Hanoi, Vietnam',
+    'contact.instagram_label': 'instagram', 'contact.form_title': 'or send a message directly —',
+    'contact.name_label': 'name', 'contact.name_ph': 'your name', 'contact.email_label2': 'email',
+    'contact.msg_label': 'message', 'contact.msg_ph': "what's on your mind?",
+    'contact.submit': 'send message →', 'contact.confirm': 'message sent — thank you.'
+  };
+
+  // Fixed Vietnamese text for the media toggle button, since its data-i18n key
+  // changes dynamically (view <-> hide) rather than being fixed at page load.
+  const originalMediaText = {
+    'media.view': 'xem ảnh & video →',
+    'media.hide': 'ẩn ảnh & video ↑'
+  };
+
+  // Store the original Vietnamese text so we can switch back without re-fetching the page
+  const originalText = {};
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (!(key in originalText)) originalText[key] = el.innerHTML;
+  });
+  const originalPlaceholders = {};
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    originalPlaceholders[key] = el.getAttribute('placeholder');
+  });
+
+  let currentLang = 'vi';
+
+  function applyLang() {
+    document.documentElement.lang = currentLang;
+    document.getElementById('lang-toggle').textContent = currentLang === 'vi' ? 'EN' : 'VI';
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (currentLang === 'vi') {
+        el.innerHTML = originalText[key];
+      } else if (translations[key] !== undefined) {
+        el.innerHTML = translations[key];
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (currentLang === 'vi') {
+        el.setAttribute('placeholder', originalPlaceholders[key]);
+      } else if (translations[key] !== undefined) {
+        el.setAttribute('placeholder', translations[key]);
+      }
+    });
+
+    renderOpenPost();
+  }
+
+  function toggleLang() {
+    currentLang = currentLang === 'vi' ? 'en' : 'vi';
+    try { localStorage.setItem('site-lang', currentLang); } catch (e) {}
+    applyLang();
+  }
+
+  try {
+    const saved = localStorage.getItem('site-lang');
+    if (saved === 'en') currentLang = 'en';
+  } catch (e) {}
+  applyLang();
 </script>
 </body>
 </html>
