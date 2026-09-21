@@ -19,6 +19,8 @@
     --accent: #2a2318;
     --serif: 'Lora', Georgia, serif;
     --mono: 'IBM Plex Mono', 'Courier New', monospace;
+    /* Shown on any .has-thumb project card that has no data-thumb link yet */
+    --placeholder-thumb: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Eth%C3%AAm %E1%BA%A3nh b%C3%ACa%3C/text%3E%3C/svg%3E');
   }
 
   html { scroll-behavior: smooth; }
@@ -330,9 +332,12 @@
 
   .project-card:not(.has-thumb).active { background: rgba(26,23,16,0.07); }
 
-  /* Card with a thumbnail image as its background (set via inline
-     style="background-image:url('...')" on the .project-card element) */
+  /* Card with a thumbnail image as its background. Shows the shared
+     placeholder by default; add data-thumb="your-image-url" on the
+     .project-card element to swap in a real photo (see the JS applyThumbnails
+     function near the bottom of the file — it reads data-thumb for you). */
   .project-card.has-thumb {
+    background-image: var(--placeholder-thumb);
     background-size: cover;
     background-position: center;
   }
@@ -789,20 +794,23 @@
       </span>
     </div>
     <div class="portfolio-section-content">
-      <!-- Every card below already has a placeholder thumbnail via class="has-thumb"
-           and an inline style="background-image:url(...)". To swap in your own photo,
-           just replace that url('...') with a file path (e.g. 'images/photo.jpg' next
-           to this HTML file) or a hosted image URL — same pattern on every card. -->
+      <!-- ══════════════════════════════════════════════════════════════════
+           HOW TO ADD A THUMBNAIL PHOTO TO ANY PROJECT CARD BELOW:
+           Add a data-thumb="..." attribute to that .project-card div, e.g.:
+             data-thumb="images/my-photo.jpg"     (a file next to this HTML)
+             data-thumb="https://example.com/img.jpg"   (a hosted image URL)
+           No attribute = shows the shared gray placeholder automatically.
+           ══════════════════════════════════════════════════════════════════ -->
       <div class="project-grid">
-        <div class="project-card has-thumb" data-panel="panel-film-0" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
+        <div class="project-card has-thumb" data-panel="panel-film-0" onclick="showDetail(this)">
           <p class="project-card-title">Trước khi tiếng chuông vang</p>
           <span class="project-card-year">2026</span>
         </div>
-        <div class="project-card has-thumb" data-panel="panel-film-1" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27blob:https://dash.cloudflare.com/cb8af0f2-537b-4a4b-9b72-a9774963cfd0 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23a89f8c%27/%3E%3Ctext x=%2750%25%27 y=%2745%25%27 font-family=%27monospace%27 font-size=%2714%27 fill=%27%23f5f2ed%27 text-anchor=%27middle%27%3Ethumbnail placeholder%3C/text%3E%3Ctext x=%2750%25%27 y=%2758%25%27 font-family=%27monospace%27 font-size=%2711%27 fill=%27%23f5f2ed%27 text-anchor=%27middle%27%3Ereplace with your film still%3C/text%3E%3C/svg%3E')">
+        <div class="project-card has-thumb" data-panel="panel-film-1" data-thumb="https://images.nguyenquochieu.work/%C4%90%C6%B0%E1%BB%9Dng%20v%E1%BB%81%20nh%C3%A0%20c%E1%BB%A7a%20th%E1%BA%A7y%20Hi%E1%BA%BFu_1.png" onclick="showDetail(this)">
           <p class="project-card-title">Đường về nhà của thầy Hiếu</p>
           <span class="project-card-year">2026</span>
         </div>
-        <div class="project-card has-thumb" data-panel="panel-film-2" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
+        <div class="project-card has-thumb" data-panel="panel-film-2" onclick="showDetail(this)">
           <p class="project-card-title" data-i18n="card.film3">(chưa có)</p>
           <span class="project-card-year">XXXX</span>
         </div>
@@ -881,12 +889,11 @@
           <button class="view-project-btn" onclick="toggleMedia(this)" data-i18n="media.view">xem ảnh & video →</button>
           <div class="project-media">
             <div class="media-gallery">
-              <!-- Replace these src values with your own photos (a file path like "images/photo1.jpg" next to this HTML file, or a hosted image URL) -->
-              <img src="data:image/svg+xml,%3Csvg xmlns='blob:https://dash.cloudflare.com/cb8af0f2-537b-4a4b-9b72-a9774963cfd0' width='400' height='300'%3E%3Crect width='400' height='300' fill='%23ddd8cc'/%3E%3Ctext x='50%25' y='50%25' font-family='monospace' font-size='16' fill='%237a7669' text-anchor='middle' dy='.3em'%3Eảnh 1%3C/text%3E%3C/svg%3E" alt="Đường về nhà của thầy Hiếu — ảnh 1">
+              <!-- Add <img src="images/photo1.jpg" alt="..."> tags here once you have real photos -->
             </div>
-            <div class="media-video">
-              <iframe src="https://youtu.be/9ACv6ITFmnk" title="Đường về nhà của thầy Hiếu" allowfullscreen></iframe>
-            </div>
+            <!-- Paste ANY YouTube link format into data-youtube below (a full watch link,
+                 a youtu.be share link, or just the bare video ID) — it's parsed automatically. -->
+            <div class="media-video" data-youtube="https://youtu.be/9ACv6ITFmnk"></div>
           </div>
         </div>
       </div>
@@ -939,7 +946,7 @@
     </div>
     <div class="portfolio-section-content">
       <div class="project-grid">
-        <div class="project-card has-thumb" data-panel="panel-motion-0" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
+        <div class="project-card has-thumb" data-panel="panel-motion-0" onclick="showDetail(this)">
           <p class="project-card-title" data-i18n="card.motion1">dự án một</p>
           <span class="project-card-year">20XX</span>
         </div>
@@ -985,7 +992,7 @@
       </div>
       <div class="portfolio-section-content">
         <div class="project-grid">
-          <div class="project-card has-thumb" data-panel="panel-collab-film-0" onclick="showDetail(this)" style="background-image:url('https://img.youtube.com/vi/OsNksQrKftM/hqdefault.jpg')">
+          <div class="project-card has-thumb" data-panel="panel-collab-film-0" data-thumb="https://img.youtube.com/vi/OsNksQrKftM/hqdefault.jpg" onclick="showDetail(this)">
             <p class="project-card-title">Thái-Nguyenese</p>
             <span class="project-card-year">2026</span>
           </div>
@@ -1017,9 +1024,7 @@
 
             <button class="view-project-btn" onclick="toggleMedia(this)" data-i18n="media.view">xem ảnh & video →</button>
             <div class="project-media">
-              <div class="media-video">
-                <iframe src="https://www.youtube.com/embed/OsNksQrKftM" title="Thái-Nguyenese" allowfullscreen></iframe>
-              </div>
+              <div class="media-video" data-youtube="https://www.youtube.com/embed/OsNksQrKftM"></div>
             </div>
           </div>
         </div>
@@ -1036,7 +1041,7 @@
       </div>
       <div class="portfolio-section-content">
         <div class="project-grid">
-          <div class="project-card has-thumb" data-panel="panel-collab-other-0" onclick="showDetail(this)" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27300%27%3E%3Crect width=%27400%27 height=%27300%27 fill=%27%23ddd8cc%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-family=%27monospace%27 font-size=%2713%27 fill=%27%237a7669%27 text-anchor=%27middle%27 dy=%27.3em%27%3Ethêm ảnh bìa%3C/text%3E%3C/svg%3E')">
+          <div class="project-card has-thumb" data-panel="panel-collab-other-0" onclick="showDetail(this)">
             <p class="project-card-title" data-i18n="card.project1">tên dự án một</p>
             <span class="project-card-year">20XX</span>
           </div>
@@ -1201,11 +1206,61 @@
     }
   }
 
+  /* ── thumbnails: reads data-thumb="..." on any .project-card and applies it
+     as the background image. Leave data-thumb off a card to show the shared
+     gray placeholder instead (set in the --placeholder-thumb CSS variable). ── */
+  function applyThumbnails() {
+    document.querySelectorAll('.project-card[data-thumb]').forEach(card => {
+      const url = card.getAttribute('data-thumb').trim();
+      if (url) card.style.backgroundImage = `url('${url}')`;
+    });
+  }
+
+  /* ── YouTube: reads data-youtube="..." on a .media-video element and builds
+     the embed iframe from it. Accepts any common link format — a full
+     watch?v= link, a youtu.be share link, an already-correct embed link, or
+     just the bare video ID — so pasting whatever YouTube gives you always
+     works, instead of needing the exact .../embed/ URL by hand. ── */
+  function extractYouTubeId(input) {
+    if (!input) return null;
+    input = input.trim();
+    const patterns = [
+      /youtu\.be\/([a-zA-Z0-9_-]{6,})/,
+      /youtube\.com\/watch\?[^#]*v=([a-zA-Z0-9_-]{6,})/,
+      /youtube\.com\/embed\/([a-zA-Z0-9_-]{6,})/,
+      /youtube\.com\/shorts\/([a-zA-Z0-9_-]{6,})/
+    ];
+    for (const p of patterns) {
+      const m = input.match(p);
+      if (m) return m[1];
+    }
+    // Not a recognizable link — assume they pasted a bare video ID
+    if (/^[a-zA-Z0-9_-]{6,}$/.test(input)) return input;
+    return null;
+  }
+
+  function applyYouTubeEmbeds() {
+    document.querySelectorAll('.media-video[data-youtube]').forEach(container => {
+      if (container.querySelector('iframe')) return; // already built
+      const id = extractYouTubeId(container.getAttribute('data-youtube'));
+      if (!id) {
+        console.warn('Could not read a YouTube video ID from:', container.getAttribute('data-youtube'));
+        return;
+      }
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${id}`;
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('loading', 'lazy');
+      container.appendChild(iframe);
+    });
+  }
+
   /* ── view project media (photos / youtube) ── */
   function toggleMedia(btn) {
     const media = btn.nextElementSibling;
     const isOpen = media.classList.contains('open');
     media.classList.toggle('open', !isOpen);
+    if (!isOpen) applyYouTubeEmbeds(); // build the iframe the first time it's opened
     const key = isOpen ? 'media.view' : 'media.hide';
     btn.setAttribute('data-i18n', key);
     btn.textContent = currentLang === 'vi' ? originalMediaText[key] : translations[key];
@@ -1383,6 +1438,7 @@
     if (saved === 'en') currentLang = 'en';
   } catch (e) {}
   applyLang();
+  applyThumbnails();
 </script>
 </body>
 </html>
