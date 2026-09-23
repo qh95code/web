@@ -810,10 +810,6 @@
           <p class="project-card-title">Đường về nhà của thầy Hiếu</p>
           <span class="project-card-year">2026</span>
         </div>
-        <div class="project-card has-thumb" data-panel="panel-film-2" onclick="showDetail(this)">
-          <p class="project-card-title" data-i18n="card.film3">(chưa có)</p>
-          <span class="project-card-year">XXXX</span>
-        </div>
       </div>
 
       <div class="project-detail-panel" id="panel-film-0">
@@ -906,81 +902,6 @@
           </div>
         </div>
       </div>
-
-      <div class="project-detail-panel" id="panel-film-2">
-        <div class="film-details-inner">
-          <div class="detail-block">
-            <span class="detail-label" data-i18n="detail.date">ngày sản xuất</span>
-            <span class="detail-value" data-i18n="value.date">Tháng–Tháng, Năm</span>
-          </div>
-          <div class="detail-block">
-            <span class="detail-label" data-i18n="detail.format">định dạng</span>
-            <span class="detail-value" data-i18n="value.format">digital / 16mm / v.v.</span>
-          </div>
-          <div class="detail-block">
-            <span class="detail-label" data-i18n="detail.duration">thời lượng</span>
-            <span class="detail-value" data-i18n="value.duration">XX phút</span>
-          </div>
-          <div class="detail-block">
-            <span class="detail-label" data-i18n="detail.status">trạng thái</span>
-            <span class="detail-value" data-i18n="value.status">hoàn thành / đang hậu kỳ / v.v.</span>
-          </div>
-          <div class="detail-block" style="grid-column: 1 / -1;">
-            <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
-            <ul class="crew-list">
-              <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name" data-i18n="crew.your_name">Tên bạn</span></li>
-              <li><span class="crew-role" data-i18n="crew.producer">nhà sản xuất</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role" data-i18n="crew.dop">quay phim</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role" data-i18n="crew.sound">âm thanh</span><span class="crew-name">Name Here</span></li>
-              <li><span class="crew-role" data-i18n="crew.editor">dựng phim</span><span class="crew-name">Name Here</span></li>
-            </ul>
-          </div>
-          <div class="detail-block" style="grid-column: 1 / -1;">
-            <span class="detail-label" data-i18n="detail.actors">diễn viên</span>
-            <span class="detail-value" data-i18n="value.name_here">Tên ở đây</span>
-          </div>
-          <p class="film-synopsis" data-i18n="synopsis.write">Viết tóm tắt ngắn ở đây — một hoặc hai câu mô tả nội dung phim.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Others -->
-  <div class="portfolio-section">
-    <div class="portfolio-section-header" onclick="toggleSection(this)">
-      <span class="section-label-text" data-i18n="section.other_stuff">Các thứ khác</span>
-      <span class="section-toggle">
-        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-      </span>
-    </div>
-    <div class="portfolio-section-content">
-      <div class="project-grid">
-        <div class="project-card has-thumb" data-panel="panel-motion-0" onclick="showDetail(this)">
-          <p class="project-card-title" data-i18n="card.motion1">dự án một</p>
-          <span class="project-card-year">20XX</span>
-        </div>
-      </div>
-
-      <div class="project-detail-panel" id="panel-motion-0">
-        <div class="film-details-inner">
-          <div class="detail-block">
-            <span class="detail-label" data-i18n="detail.client">khách hàng</span>
-            <span class="detail-value" data-i18n="value.client_name">Tên khách hàng</span>
-          </div>
-          <div class="detail-block">
-            <span class="detail-label" data-i18n="detail.year">năm</span>
-            <span class="detail-value">20XX</span>
-          </div>
-          <div class="detail-block" style="grid-column: 1 / -1;">
-            <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
-            <ul class="crew-list">
-              <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name" data-i18n="crew.your_name">Tên bạn</span></li>
-              <li><span class="crew-role" data-i18n="crew.collaborator">cộng tác viên</span><span class="crew-name">Name Here</span></li>
-            </ul>
-          </div>
-          <p class="film-synopsis" data-i18n="synopsis.made">Mô tả ngắn gọn về dự án — mục đích và những gì bạn đã làm.</p>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -1040,49 +961,6 @@
       </div>
     </div>
 
-    <!-- Other Projects (participated) -->
-    <div class="portfolio-section">
-      <div class="portfolio-section-header" onclick="toggleSection(this)">
-        <span class="section-label-text" data-i18n="section.other">dự án khác</span>
-        <span class="section-toggle">
-          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </span>
-      </div>
-      <div class="portfolio-section-content">
-        <div class="project-grid">
-          <div class="project-card has-thumb" data-panel="panel-collab-other-0" onclick="showDetail(this)">
-            <p class="project-card-title" data-i18n="card.project1">tên dự án một</p>
-            <span class="project-card-year">20XX</span>
-          </div>
-        </div>
-
-        <div class="project-detail-panel" id="panel-collab-other-0">
-          <div class="film-details-inner">
-            <div class="detail-block">
-              <span class="detail-label" data-i18n="detail.client_production">khách hàng / đơn vị sản xuất</span>
-              <span class="detail-value" data-i18n="value.name_here">Tên ở đây</span>
-            </div>
-            <div class="detail-block">
-              <span class="detail-label" data-i18n="detail.year">năm</span>
-              <span class="detail-value">20XX</span>
-            </div>
-            <div class="detail-block" style="grid-column: 1 / -1;">
-              <span class="detail-label" data-i18n="detail.my_role">vai trò của tôi</span>
-              <span class="detail-value" data-i18n="value.role_ex2">vd: trợ lý dựng phim / gaffer / trợ lý sản xuất</span>
-            </div>
-            <div class="detail-block" style="grid-column: 1 / -1;">
-              <span class="detail-label" data-i18n="detail.crew">ê-kíp</span>
-              <ul class="crew-list">
-                <li><span class="crew-role" data-i18n="crew.director">đạo diễn</span><span class="crew-name">Name Here</span></li>
-                <li><span class="crew-role" data-i18n="crew.producer">nhà sản xuất</span><span class="crew-name">Name Here</span></li>
-              </ul>
-            </div>
-            <p class="film-synopsis" data-i18n="synopsis.helped">Mô tả ngắn gọn về dự án — mục đích và vai trò của bạn trong đó.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div> <!-- /portfolio-group: what I helped make -->
 </section>
 
@@ -1098,22 +976,6 @@
         <span class="blog-date" data-i18n="blog.date">Th<br>20XX</span>
         <div>
           <p class="blog-post-title" data-i18n="blog.title1">tiêu đề bài viết một</p>
-          <p class="blog-post-excerpt" data-i18n="blog.excerpt">Viết đoạn tóm tắt ngắn cho bài viết này ở đây.</p>
-          <span class="blog-tag" data-i18n="blog.tag">thẻ</span>
-        </div>
-      </li>
-      <li class="blog-post" onclick="openPost(1)">
-        <span class="blog-date" data-i18n="blog.date">Th<br>20XX</span>
-        <div>
-          <p class="blog-post-title" data-i18n="blog.title2">tiêu đề bài viết hai</p>
-          <p class="blog-post-excerpt" data-i18n="blog.excerpt">Viết đoạn tóm tắt ngắn cho bài viết này ở đây.</p>
-          <span class="blog-tag" data-i18n="blog.tag">thẻ</span>
-        </div>
-      </li>
-      <li class="blog-post" onclick="openPost(2)">
-        <span class="blog-date" data-i18n="blog.date">Th<br>20XX</span>
-        <div>
-          <p class="blog-post-title" data-i18n="blog.title3">tiêu đề bài viết ba</p>
           <p class="blog-post-excerpt" data-i18n="blog.excerpt">Viết đoạn tóm tắt ngắn cho bài viết này ở đây.</p>
           <span class="blog-tag" data-i18n="blog.tag">thẻ</span>
         </div>
@@ -1288,30 +1150,6 @@
         body: `<p>Write your blog post content here.</p>
 <p>You can have multiple paragraphs. Just copy the <code>&lt;p&gt;...&lt;/p&gt;</code> pattern for each one.</p>`
       }
-    },
-    {
-      vi: {
-        date: 'Tháng 20XX', title: 'tiêu đề bài viết hai', tag: 'thẻ',
-        body: `<p>Viết nội dung bài viết ở đây.</p>
-<p>Bạn có thể viết nhiều đoạn văn. Chỉ cần sao chép mẫu <code>&lt;p&gt;...&lt;/p&gt;</code> cho mỗi đoạn.</p>`
-      },
-      en: {
-        date: 'Month 20XX', title: 'post title two', tag: 'tag',
-        body: `<p>Write your blog post content here.</p>
-<p>You can have multiple paragraphs. Just copy the <code>&lt;p&gt;...&lt;/p&gt;</code> pattern for each one.</p>`
-      }
-    },
-    {
-      vi: {
-        date: 'Tháng 20XX', title: 'tiêu đề bài viết ba', tag: 'thẻ',
-        body: `<p>Viết nội dung bài viết ở đây.</p>
-<p>Bạn có thể viết nhiều đoạn văn. Chỉ cần sao chép mẫu <code>&lt;p&gt;...&lt;/p&gt;</code> cho mỗi đoạn.</p>`
-      },
-      en: {
-        date: 'Month 20XX', title: 'post title three', tag: 'tag',
-        body: `<p>Write your blog post content here.</p>
-<p>You can have multiple paragraphs. Just copy the <code>&lt;p&gt;...&lt;/p&gt;</code> pattern for each one.</p>`
-      }
     }
   ];
 
@@ -1362,25 +1200,14 @@
     'page.portfolio': 'Portfolio', 'page.contact': 'Contact',
     'group.made_title': 'what I make', 'group.made_subtitle': 'projects I directed / led',
     'group.helped_title': 'what I helped make', 'group.helped_subtitle': 'projects I participated in / crewed on',
-    'section.short_films': 'short films', 'section.other_stuff': 'other stuff', 'section.other': 'other projects',
-    'card.film3': 'not yet',
-    'card.motion1': 'project one', 'card.project1': 'project title one',
+    'section.short_films': 'short films',
     'detail.date': 'production date', 'detail.format': 'format', 'detail.duration': 'duration',
-    'detail.status': 'status', 'detail.crew': 'crew', 'detail.client': 'client', 'detail.actors': 'cast',
-    'detail.client_production': 'client / production', 'detail.year': 'year', 'detail.my_role': 'my role',
-    'value.date': 'Month–Month, Year', 'value.format': 'digital / 16mm / etc.', 'value.duration': 'XX min',
-    'value.status': 'completed / in post / etc.', 'value.client_name': 'Client Name', 'value.name_here': 'Name Here',
-    'value.role_ex1': 'e.g. cinematographer / editor / sound',
-    'value.role_ex2': 'e.g. assistant editor / gaffer / production assistant',
+    'detail.status': 'status', 'detail.crew': 'crew', 'detail.actors': 'cast', 'detail.my_role': 'my role',
     'crew.director': 'director', 'crew.producer': 'producer', 'crew.dop': 'd.o.p.', 'crew.writer': 'writer',
-    'crew.assistant_director': 'assistant director',
-    'crew.sound': 'sound', 'crew.editor': 'editor', 'crew.collaborator': 'collaborator', 'crew.your_name': 'Your Name',
-    'synopsis.write': 'Write a short synopsis here — one or two sentences describing what the film is about.',
-    'synopsis.made': 'Brief description of the project — what it was for, what you made.',
-    'synopsis.helped': 'Brief description of the project — what it was for, what you did on it.',
+    'crew.assistant_director': 'assistant director', 'crew.editor': 'editor',
     'media.view': 'view photos & video →', 'media.hide': 'hide photos & video ↑',
     'blog.date': 'Mon<br>20XX',
-    'blog.title1': 'post title one', 'blog.title2': 'post title two', 'blog.title3': 'post title three',
+    'blog.title1': 'post title one',
     'blog.excerpt': 'Write a short excerpt or summary of this post here.',
     'blog.tag': 'tag', 'blog.back': '← back to blog',
     'contact.email_label': 'email', 'contact.location_label': 'location', 'contact.location_value': 'Hanoi, Vietnam',
