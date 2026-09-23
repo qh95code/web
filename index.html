@@ -549,69 +549,6 @@
 
   .contact-block a:hover { border-color: var(--border-hover); }
 
-  .contact-form {
-    margin-top: 3rem;
-    animation: fadeUp 0.5s 0.2s ease both;
-  }
-
-  .contact-form-title {
-    font-size: 1rem;
-    color: var(--muted);
-    margin-bottom: 1.5rem;
-    font-style: italic;
-  }
-
-  .form-row { margin-bottom: 1.2rem; }
-
-  .form-row label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 0.4rem;
-  }
-
-  .form-row input,
-  .form-row textarea {
-    width: 100%;
-    background: transparent;
-    border: 0.5px solid var(--border);
-    border-radius: 2px;
-    padding: 0.6rem 0.8rem;
-    font-family: var(--serif);
-    font-size: 16px;
-    color: var(--fg);
-    outline: none;
-    transition: border-color 0.2s;
-    resize: vertical;
-  }
-
-  .form-row input:focus,
-  .form-row textarea:focus { border-color: var(--border-hover); }
-
-  .form-row textarea { min-height: 120px; }
-
-  .form-submit {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: lowercase;
-    color: var(--fg);
-    background: transparent;
-    border: 0.5px solid var(--border-hover);
-    padding: 0.6rem 1.6rem;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-    border-radius: 2px;
-  }
-
-  .form-submit:hover {
-    background: var(--fg);
-    color: var(--bg);
-  }
-
   /* ── BLOG ── */
   #page-blog {
     max-width: 720px;
@@ -1014,26 +951,6 @@
         <a href="https://instagram.com/hieukhongaiyeu" target="_blank">@hieukhongaiyeu</a>
       </div>
     </div>
-
-    <div class="contact-form">
-      <p class="contact-form-title" data-i18n="contact.form_title">hoặc gửi tin nhắn trực tiếp —</p>
-      <div class="form-row">
-        <label for="f-name" data-i18n="contact.name_label">tên</label>
-        <input type="text" id="f-name" placeholder="tên của bạn" data-i18n-placeholder="contact.name_ph">
-      </div>
-      <div class="form-row">
-        <label for="f-email" data-i18n="contact.email_label2">email</label>
-        <input type="email" id="f-email" placeholder="your@email.com">
-      </div>
-      <div class="form-row">
-        <label for="f-msg" data-i18n="contact.msg_label">lời nhắn</label>
-        <textarea id="f-msg" placeholder="bạn đang nghĩ gì?" data-i18n-placeholder="contact.msg_ph"></textarea>
-      </div>
-      <button class="form-submit" onclick="handleSubmit()" data-i18n="contact.submit">gửi tin nhắn →</button>
-      <p id="form-confirm" style="display:none; font-family: var(--mono); font-size:11px; color: var(--muted); margin-top:0.8rem; letter-spacing:0.1em;" data-i18n="contact.confirm">
-        đã gửi tin nhắn — cảm ơn bạn.
-      </p>
-    </div>
   </div>
 </section>
 
@@ -1179,18 +1096,6 @@
     openPostIndex = null;
   }
 
-  /* ── contact form ── */
-  function handleSubmit() {
-    const name = document.getElementById('f-name').value.trim();
-    const email = document.getElementById('f-email').value.trim();
-    const msg = document.getElementById('f-msg').value.trim();
-    if (!name || !email || !msg) return;
-    document.getElementById('form-confirm').style.display = 'block';
-    document.getElementById('f-name').value = '';
-    document.getElementById('f-email').value = '';
-    document.getElementById('f-msg').value = '';
-  }
-
   /* ── i18n (Vietnamese default, English toggle) ── */
   const translations = {
     'nav.home': 'home', 'nav.portfolio': 'portfolio', 'nav.blog': 'blog', 'nav.contact': 'contact',
@@ -1211,10 +1116,7 @@
     'blog.excerpt': 'Write a short excerpt or summary of this post here.',
     'blog.tag': 'tag', 'blog.back': '← back to blog',
     'contact.email_label': 'email', 'contact.location_label': 'location', 'contact.location_value': 'Hanoi, Vietnam',
-    'contact.instagram_label': 'instagram', 'contact.form_title': 'or send a message directly —',
-    'contact.name_label': 'name', 'contact.name_ph': 'your name', 'contact.email_label2': 'email',
-    'contact.msg_label': 'message', 'contact.msg_ph': "what's on your mind?",
-    'contact.submit': 'send message →', 'contact.confirm': 'message sent — thank you.'
+    'contact.instagram_label': 'instagram',
   };
 
   // Fixed Vietnamese text for the media toggle button, since its data-i18n key
